@@ -1,0 +1,14 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    minitest (4.1.0)
+    racc (1.4.9)
+    rkelly (1.0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  minitest
+  racc
+  rkelly
