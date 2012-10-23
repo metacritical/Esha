@@ -1,1 +1,22 @@
+<<<<<<< HEAD
 tutorials/
+=======
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+
+# YARD artifacts
+.yardoc
+_yardoc
+doc/
+>>>>>>> 553fa43e577cbfc7756f6881298826dd56cfe224
