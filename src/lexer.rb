@@ -10,6 +10,9 @@ class Lexer
   end
     
   def tokenize
+    #Sanitize Input Code
+    sanitize
+
     #List All Parsed Tokens
     parsed_tokens = []
 
@@ -24,8 +27,10 @@ class Lexer
 
     #Initialize loop variable i to zero
     i = 0
-    #while i < code.size
+    
+    #while i < self.code.size
       
     #end
+    code.split(" ")
   end
 end

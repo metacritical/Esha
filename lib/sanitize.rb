@@ -13,5 +13,11 @@ module Sanitize
   def remove_tail_spaces
     self.code.gsub(/^\s+|\s+$/,"")
   end
+
+  def sanitize
+    remove_new_line
+    remove_white_space
+    remove_tail_spaces
+  end
 end
 

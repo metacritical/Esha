@@ -29,8 +29,7 @@ describe Lexer do
    lexer.remove_tail_spaces.match(/\s+$/).must_be_nil
   end
 
-
   it "should tokenize the given code" do
-    skip
+    lexer.tokenize
   end
 end
