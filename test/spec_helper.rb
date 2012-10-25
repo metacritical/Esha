@@ -1,5 +1,7 @@
 require_relative '../src/lexer'
 
-@test_code = <<-code
-  person := Object clone
-code
+def test_code
+  @test_code = <<-code
+                  person := Object clone
+                  code
+end
