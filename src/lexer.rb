@@ -36,13 +36,18 @@ class Lexer
       chunk = code[i..-1]
       current_char = code[i]
       
-      if identifier  = chunk.match(/\A(\S+)\w*/)
-        puts identifier[0] + " " + identifier[0].size.to_s
+      if identifier  = chunk.match(/\A(\S+)\w*/).captures.first
+        puts [identifier ,identifier.size].join(" ") # Just a temporary stuff to see match words
+        parsed_tokens << [identifier.upcase.to_sym , identifier]
       end
       
-      i += identifier[0].size + 1
+      i += identifier.size + 1
     end
       
+    #Tokenized Output
+    puts parsed_tokens.inspect
+
+
     #code.split(" ")
   end
 end
