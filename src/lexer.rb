@@ -5,7 +5,8 @@ class Lexer
   attr_accessor :code
   
   KEYWORDS = ['Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
-              'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine']
+              'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
+              ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/']
   
   #Initialize With Code
   def initialize(input_code)
