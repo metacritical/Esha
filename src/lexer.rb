@@ -52,7 +52,6 @@ class Lexer
     #Tokenized Output
     puts parsed_tokens.inspect
 
-
     #code.split(" ")
   end
 end
