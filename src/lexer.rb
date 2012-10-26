@@ -6,7 +6,7 @@ class Lexer
   
   KEYWORDS = ['Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
               'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
-              ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/']
+              ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list']
   
   #Initialize With Code
   def initialize(input_code)
@@ -39,7 +39,11 @@ class Lexer
       
       if identifier  = chunk.match(/\A(\S+)\w*/).captures.first
         puts [identifier ,identifier.size].join(" ") # Just a temporary stuff to see match words
-        parsed_tokens << [identifier.upcase.to_sym , identifier]
+        if KEYWORDS.include?(identifier)
+          parsed_tokens << [identifier.upcase.to_sym , identifier]
+        else 
+          parsed_tokens << [:IDENTIFIER, identifier]
+        end
       end
       
       i += identifier.size + 1
