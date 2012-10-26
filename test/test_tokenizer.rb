@@ -14,7 +14,7 @@ describe Lexer do
   end
   
   it "should remove all newline \\n character" do 
-    lexer.remove_new_line.scan(/\n/).first.wont_equal "\n"
+   skip "Need to see if we need to remove \\n later" #lexer.remove_new_line.scan(/\n/).first.wont_equal "\n"
   end
 
   it "should remove extra white space from inside the code" do 

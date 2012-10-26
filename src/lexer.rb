@@ -1,8 +1,11 @@
-require '../lib/sanitize'
+require_relative '../lib/sanitize'
 
 class Lexer
   include Sanitize
   attr_accessor :code
+  
+  KEYWORDS = ['Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
+              'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine']
   
   #Initialize With Code
   def initialize(input_code)
@@ -28,9 +31,20 @@ class Lexer
     #Initialize loop variable i to zero
     i = 0
     
-    #while i < self.code.size
+    puts "Input code :" + code + "\n\n"
+    while i < self.code.size
+      chunk = code[i..-1]
+      current_char = code[i]
       
-    #end
-    code.split(" ")
+      if identifier  = chunk.match(/\A(\S+)\w*/)
+        puts identifier[0] + " " + identifier[0].size.to_s
+      end
+      
+      i += identifier[0].size + 1
+    end
+      
+    #code.split(" ")
   end
 end
+
+lexer = Lexer.new("Person := Object clone").tokenize
