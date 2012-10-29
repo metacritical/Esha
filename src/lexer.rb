@@ -10,32 +10,9 @@ class Lexer
   
   #Initialize With Code
   def initialize(input_code)
-   self.code = input_code.gsub(/\n/,";")
-   self.code = self.code.gsub(/\s+/," ")
-   self.code = self.code.gsub(/^\s*/,"").gsub(/\s+$/,"")
+    self.code = input_code
+    sanitize
   end
-
-  #Remove \n line
-  def remove_new_line
-  end
-  
-  #Getting Rid of more than one space inside code 
-  def remove_white_space
-
-  end
-  
-  #Remove whitespace from beginning and end of line
-  def remove_tail_spaces
-
-  end
-  
-  #Sanitize Input Code
-  def sanitize
-    #remove_new_line
-    remove_white_space
-    remove_tail_spaces
-  end
-
     
   def tokenize
     #List All Parsed Tokens
@@ -52,7 +29,9 @@ class Lexer
 
     #Initialize loop variable i to zero
     i = 0
+
     current_char = self.code[i]
+    
     puts "Input code : #{self.code} \n\n"
     while i < self.code.size
       chunk = self.code[i..-1]
@@ -67,6 +46,7 @@ class Lexer
         end
        i += identifier.size + 1 
     end
+    
     #End the token with false
     parsed_tokens << [false, false]
     
@@ -76,9 +56,3 @@ class Lexer
     #code.split(" ")
   end
 end
-
-lexer = Lexer.new(%q{person := Object clone
-                      a := 1
-                      b := 2
-                      a + b
-                      }).tokenize
