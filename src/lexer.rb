@@ -4,9 +4,11 @@ class Lexer
   include Sanitize
   attr_accessor :code
   
-  KEYWORDS = ['Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
+  KEYWORDS = [
+              'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
               'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
-              ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list']
+              ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list'
+             ]
   
   #Initialize With Code
   def initialize(input_code)
@@ -45,7 +47,7 @@ class Lexer
         when identifier == ':='
           puts "Identifier : #{identifier}"
           parsed_tokens << [:SETSLOT,identifier]
-        when
+        when identifier = chunk[/;/,1]
           puts "Identifier : #{identifier}"
           parsed_tokens << [identifier.upcase.to_sym,identifier]
         else
