@@ -32,33 +32,42 @@ class Lexer
     #Initialize loop variable i to zero
     i = 0
 
-    current_char = self.code[i]
+    current_char = code[i]
     
-    puts "Input code : #{self.code} \n\n"
-    while i < self.code.size
-      chunk = self.code[i..-1]
-      puts "Reduce : #{chunk}"
+    p "Input code : #{code}"
+    while i < code.size
+      chunk = code[i..-1]
+      puts "#{i} - Reduce : #{chunk}"
+      if identifier = chunk[/(\A[a-zA-z]\w*)/,1]
+        puts "Identifier size: #{identifier} - #{identifier.size}"
 
-      if identifier = chunk[/\A([a-zA-Z]\w*)/,1]
-        puts "Identifier : #{identifier}"
-        parsed_tokens << [identifier.upcase.to_sym,identifier]
-      elsif identifier = chunk[/\A(\S+)\w*/,1]
-        case identifier
-        when identifier == ':='
+        if KEYWORDS.include?(identifier)
           puts "Identifier : #{identifier}"
-          parsed_tokens << [:SETSLOT,identifier]
-        when identifier = chunk[/;/,1]
-          puts "Identifier : #{identifier}"
-          parsed_tokens << [identifier.upcase.to_sym,identifier]
+          parsed_tokens << [identifier.capitalize.to_sym , identifier]
         else
-          puts "Identifier : #{identifier}"
           parsed_tokens << [:IDENTIFIER,identifier]
-        end
+        end        
+      elsif identifier = chunk[/\A\(/]
+        parsed_tokens << [:BRACKET_OPEN , identifier]
+      elsif identifier =  chunk[/\A\)/]
+        parsed_tokens << [:BRACKET_CLOSE , identifier]
+      elsif identifier = chunk[/\A(:=)/,1]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:setSlot, identifier]
+      elsif identifier = chunk[/\A([0-9])+/,1]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:Number, identifier]
+      elsif identifier = chunk[/\A\".+\"/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:String, identifier]
+      elsif identifier = chunk[/\A(\n)+/m,1]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:NEWLINE,"\n"]
       end
       unless identifier.nil?
-        i += identifier.size + 1
+        i += identifier.size
       else
-        i += i + 1
+        i += 1
       end
     end
     #End the token with false
@@ -91,4 +100,42 @@ end
         puts "IDentifier : #{identifier}"
       end
       puts parsed_tokens.inspect
+
+
+        if KEYWORDS.include?(identifier)
+          puts "Identifier : #{identifier}"
+          parsed_tokens << [:IDENTIFIER,identifier]
+        elsif identifier = chunk[/\A(:=)/,1]
+          puts "Identifier 3: #{identifier}"
+          parsed_tokens << [:SETSLOT,identifier]
+        elsif identifier = chunk[/\A\"(\S*)\"/,1]
+          puts "Identifier 4: #{identifier}"
+          parsed_tokens << [:STRING,identifier]
+        elsif identifier = chunk[/\n/,1]
+          puts "Identifier 4: #{identifier}"
+          parsed_tokens << [:NEWLINE,identifier]
+        end
+      end
+      if identifier.nil?
+        i = i + 1
+      else
+        i = i + identifier.size
+      end
+
+=======================
+
+      elsif identifier = chunk[/\A(\S+)\w*/,1]
+        case identifier
+        when identifier == ':='
+          puts "Identifier : #{identifier}"
+          parsed_tokens << [:SETSLOT,identifier]
+        when identifier = chunk[/;/,1]
+          puts "Identifier : #{identifier}"
+          parsed_tokens << [identifier.upcase.to_sym,identifier]
+        else
+          puts "Identifier : #{identifier}"
+          parsed_tokens << [:IDENTIFIER,identifier]
+        end
+      end
+
 =end
