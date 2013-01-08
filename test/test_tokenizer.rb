@@ -32,4 +32,8 @@ describe Lexer do
   it "should tokenize the given code" do
     self.lexer.tokenize
   end
+
+  it "Should replace all ';' semicolons with a nweline character" do
+    self.lexer.replace_semicolons.scan(/(;)*/).first.wont_equal ";"
+  end
 end
