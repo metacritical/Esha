@@ -4,7 +4,7 @@ class Lexer
   include Sanitize
   attr_accessor :code
   
-  KEYWORDS = [
+  RESERVED_WORDS = [
               'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
               'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
               ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list'
@@ -41,9 +41,9 @@ class Lexer
       if identifier = chunk[/(\A[a-zA-z]\w*)/,1]
         puts "Identifier size: #{identifier} - #{identifier.size}"
 
-        if KEYWORDS.include?(identifier)
+        if RESERVED_WORDS.include?(identifier)
           puts "Identifier : #{identifier}"
-          parsed_tokens << [identifier.capitalize.to_sym , identifier]
+          parsed_tokens << [identifier.upcase.to_sym , identifier]
         else
           parsed_tokens << [:IDENTIFIER,identifier]
         end        
@@ -56,10 +56,10 @@ class Lexer
         parsed_tokens << [:setSlot, identifier]
       elsif identifier = chunk[/\A([0-9])+/,1]
         puts "Identifier : #{identifier}"
-        parsed_tokens << [:Number, identifier]
+        parsed_tokens << [:NUMBER, identifier]
       elsif identifier = chunk[/\A\".+\"/]
         puts "Identifier : #{identifier}"
-        parsed_tokens << [:String, identifier]
+        parsed_tokens << [:STRING, identifier]
       elsif identifier = chunk[/\A(\n)+/m,1]
         puts "Identifier : #{identifier}"
         parsed_tokens << [:NEWLINE,"\n"]
@@ -79,63 +79,3 @@ class Lexer
     #code.split(" ")
   end
 end
-
-=begin
-
-      if identifier = chunk.match(/([a-zA-Z]\w*)/)
-        identifier = chunk.match(/([a-zA-Z]\w*)/).captures.first
-        #puts [identifier ,identifier.size].join(" ") # Just a temporary stuff to see match words
-        if KEYWORDS.include?(identifier)
-          parsed_tokens << [identifier.upcase.to_sym , identifier]
-          puts "IDentifier : #{identifier}"
-        else
-          parsed_tokens << [:IDENTIFIER, identifier]
-          puts "IDentifier : #{identifier}"
-        end
-      elsif identifier = chunk[/;/,1]
-        parsed_tokens << [:NEWLINE , identifier]
-        puts "IDentifier : #{identifier}"
-      elsif setslot = chunk[/:=/,1]
-        parsed_tokens << [:SETSLOT , identifier]
-        puts "IDentifier : #{identifier}"
-      end
-      puts parsed_tokens.inspect
-
-
-        if KEYWORDS.include?(identifier)
-          puts "Identifier : #{identifier}"
-          parsed_tokens << [:IDENTIFIER,identifier]
-        elsif identifier = chunk[/\A(:=)/,1]
-          puts "Identifier 3: #{identifier}"
-          parsed_tokens << [:SETSLOT,identifier]
-        elsif identifier = chunk[/\A\"(\S*)\"/,1]
-          puts "Identifier 4: #{identifier}"
-          parsed_tokens << [:STRING,identifier]
-        elsif identifier = chunk[/\n/,1]
-          puts "Identifier 4: #{identifier}"
-          parsed_tokens << [:NEWLINE,identifier]
-        end
-      end
-      if identifier.nil?
-        i = i + 1
-      else
-        i = i + identifier.size
-      end
-
-=======================
-
-      elsif identifier = chunk[/\A(\S+)\w*/,1]
-        case identifier
-        when identifier == ':='
-          puts "Identifier : #{identifier}"
-          parsed_tokens << [:SETSLOT,identifier]
-        when identifier = chunk[/;/,1]
-          puts "Identifier : #{identifier}"
-          parsed_tokens << [identifier.upcase.to_sym,identifier]
-        else
-          puts "Identifier : #{identifier}"
-          parsed_tokens << [:IDENTIFIER,identifier]
-        end
-      end
-
-=end
