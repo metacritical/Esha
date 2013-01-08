@@ -5,6 +5,7 @@ GEM
     ffi (1.1.5)
     minitest (4.1.0)
     racc (1.4.9)
+    rake (10.0.3)
     rkelly (1.0.7)
     ruby-llvm (3.0.0)
       ffi (>= 1.0.0)
@@ -16,5 +17,6 @@ DEPENDENCIES
   babel_bridge
   minitest
   racc
+  rake
   rkelly
   ruby-llvm

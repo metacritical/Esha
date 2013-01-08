@@ -13,6 +13,10 @@ module Sanitize
   def remove_tail_spaces
     self.code = code.gsub(/^\s*/,"").gsub(/\s+$/,"")
   end
+
+  def remove_semicolon
+    ""
+  end
   
   #Sanitize Input Code
   def sanitize
