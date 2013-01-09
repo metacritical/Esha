@@ -63,9 +63,6 @@ class Lexer
       elsif identifier = chunk[/\A(\n)+/m,1]
         puts "Identifier : #{identifier}"
         parsed_tokens << [:NEWLINE,"\n"]
-      elsif identifier = chunk[/\A(\+)/]
-        puts "Identifier : #{identifier}"
-        parsed_tokens << [:OPERATOR, identifier]
       end
       unless identifier.nil?
         i += identifier.size
