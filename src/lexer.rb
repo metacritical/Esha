@@ -1,14 +1,14 @@
-require_relative '../lib/sanitize'
+require_relative '../setup'
 
 class Lexer
   include Sanitize
   attr_accessor :code
   
   RESERVED_WORDS = [
-              'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
-              'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
-              ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list'
-             ]
+                    'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
+                    'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
+                    ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list'
+                   ]
   
   #Initialize With Code
   def initialize(input_code)
@@ -34,6 +34,7 @@ class Lexer
 
     current_char = code[i]
     
+    puts "Load Path : #{$LOAD_PATH}"
     p "Input code : #{code}"
     while i < code.size
       chunk = code[i..-1]
@@ -43,17 +44,19 @@ class Lexer
 
         if RESERVED_WORDS.include?(identifier)
           puts "Identifier : #{identifier}"
-          parsed_tokens << [identifier.upcase.to_sym , identifier]
+          parsed_tokens << [identifier.upcase.intern , identifier]
         else
           parsed_tokens << [:IDENTIFIER,identifier]
         end        
       elsif identifier = chunk[/\A\(/]
+        puts "Identifier : #{identifier}"
         parsed_tokens << [:BRACKET_OPEN , identifier]
       elsif identifier =  chunk[/\A\)/]
+        puts "Identifier : #{identifier}"
         parsed_tokens << [:BRACKET_CLOSE , identifier]
       elsif identifier = chunk[/\A(:=)/,1]
         puts "Identifier : #{identifier}"
-        parsed_tokens << [:setSlot, identifier]
+        parsed_tokens << [:SETSLOT, identifier]
       elsif identifier = chunk[/\A([0-9])+/,1]
         puts "Identifier : #{identifier}"
         parsed_tokens << [:NUMBER, identifier]
@@ -65,7 +68,31 @@ class Lexer
         parsed_tokens << [:NEWLINE,"\n"]
       elsif identifier = chunk[/\A(\+)/]
         puts "Identifier : #{identifier}"
-        parsed_tokens << [:OPERATOR, identifier]
+        parsed_tokens << [:PLUS, identifier]
+      elsif identifier = chunk[/\A(\-)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:MINUS, identifier]
+      elsif identifier = chunk[/\A(\*)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:ASTERISK, identifier]
+      elsif identifier = chunk[/\A(\/)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:SLASH, identifier]
+      elsif identifier = chunk[/\A(\&&)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:AND, identifier]
+      elsif identifier = chunk[/\A(\|\|)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:OR, identifier]
+      elsif identifier = chunk[/\A(\!)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:NOT, identifier]
+      elsif identifier = chunk[/\A(\;)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:SEMICOLON, identifier]
+      elsif identifier = chunk[/\A(\,)/]
+        puts "Identifier : #{identifier}"
+        parsed_tokens << [:COMMA, identifier]
       end
       unless identifier.nil?
         i += identifier.size
@@ -79,6 +106,5 @@ class Lexer
     #Tokenized Output
     puts parsed_tokens.inspect
 
-    #code.split(" ")
   end
 end
