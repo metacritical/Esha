@@ -12,3 +12,13 @@ def test_code
   d - c
   }
 end
+
+
+=begin
+#A thought on how to design the objects in the tree
+<IO:AST:Setslot>
+  @left= Person
+  @right = 
+     <IO:AST:Clone>
+        @value=<Object>
+=end

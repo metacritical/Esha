@@ -1,15 +1,8 @@
 require_relative '../setup'
 
 class Lexer
-  include Sanitize
   attr_accessor :code
-  
-  RESERVED_WORDS = [
-                    'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
-                    'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
-                    ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list'
-                   ]
-  
+    
   #Initialize With Code
   def initialize(input_code)
     self.code = input_code
@@ -33,9 +26,8 @@ class Lexer
     i = 0
 
     current_char = code[i]
-    
-    puts "Load Path : #{$LOAD_PATH}"
-    p "Input code : #{code}"
+
+    puts "Input code : #{code}"
     while i < code.size
       chunk = code[i..-1]
       puts "#{i} - Reduce : #{chunk}"
