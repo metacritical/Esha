@@ -10,6 +10,9 @@ def test_code
   list(1,2,3,4);
   d := 4;
   d - c
+  -a+b*c/d;
+  Car := Object clone
+  property1 := "Ferrari"
   }
 end
 

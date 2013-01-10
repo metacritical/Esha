@@ -4,9 +4,10 @@ module Sanitize
     self.code = code.gsub(/^(\n)+/,"") #Remove New line from beginning
   end
   
-  #Getting Rid of more than one space inside code 
+  #Getting Rid of more than one space in code 
   def remove_white_space
-    self.code = code.gsub(/\s+/," ")
+    self.code = code.gsub(/\A\s+/m,"") #Remove Begining Spaces
+    self.code = code.gsub(/\Z\s+/m,"") #Remove Ending   Spaces
   end
   
   #Remove whitespace from beginning and end of line

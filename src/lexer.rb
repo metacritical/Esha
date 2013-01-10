@@ -31,8 +31,8 @@ class Lexer
     while i < code.size
       chunk = code[i..-1]
       puts "#{i} - Reduce : #{chunk}"
-      if identifier = chunk[/(\A[a-zA-z]\w*)/,1]
-        puts "Identifier size: #{identifier} - #{identifier.size}"
+      if identifier = chunk[/(\A[a-zA-z0-9]\w*)/,1]
+        puts "Identifier size (#{identifier.size}): #{identifier}"
 
         if RESERVED_WORDS.include?(identifier)
           puts "Identifier : #{identifier}"
@@ -87,7 +87,7 @@ class Lexer
         parsed_tokens << [:COMMA, identifier]
       end
       unless identifier.nil?
-        i += identifier.size
+        i += identifier.size        
       else
         i += 1
       end
