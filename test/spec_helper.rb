@@ -12,6 +12,13 @@ def test_code
   d - c
   -a+b*c/d;
   Car := Object clone
+  a = "Poltergiest"
+  3 == 2
+  3 <= 2
+  3 >= 2
+  3 != 2
+  3 > 2
+  3 < 2
   property1 := "Ferrari"
   }
 end
