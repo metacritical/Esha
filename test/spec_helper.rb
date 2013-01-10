@@ -2,6 +2,12 @@ require_relative '../src/lexer'
 
 def test_code
   %Q{
+  3 == 2
+  3 <= 2
+  3 >= 2
+  3 != 2
+  3 > 2
+  3 < 2
   Person := Object clone;
   a := 1;
   b := 2;
@@ -13,12 +19,6 @@ def test_code
   -a+b*c/d;
   Car := Object clone
   a = "Poltergiest"
-  3 == 2
-  3 <= 2
-  3 >= 2
-  3 != 2
-  3 > 2
-  3 < 2
   property1 := "Ferrari"
   }
 end

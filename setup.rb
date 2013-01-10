@@ -4,6 +4,7 @@ require 'sanitize'
 require 'tokens'
 require 'coderay'
 require 'colorprinter'
+require 'pp'
 
 class Lexer
   include Sanitize

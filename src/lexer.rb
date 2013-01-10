@@ -47,12 +47,6 @@ class Lexer
       elsif identifier =  chunk[/\A\)/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:BRACKET_CLOSE , identifier]
-      elsif identifier = chunk[/\A(:=)/,1]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:SETSLOT, identifier]
-      elsif identifier = chunk[/\A(=)/,1]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:UPDATESLOT, identifier]
       elsif identifier = chunk[/\A([0-9])+/,1]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:NUMBER, identifier]
@@ -86,27 +80,33 @@ class Lexer
       elsif identifier = chunk[/\A(\==)/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:COMPARISON, identifier]
-      elsif identifier = chunk[/\A(\!=)/]
+      elsif identifier = chunk[/\A\!=/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:NOT_EQUALS, identifier]
+      elsif identifier = chunk[/\A\<=/]
+        paint "Identifier : #{identifier}", :red
+        parsed_tokens << [:LESSTHAN_EQUALS, identifier]
+      elsif identifier = chunk[/\A\>=/]
+        paint "Identifier : #{identifier}", :red
+        parsed_tokens << [:GREATERTHAN_EQUALS, identifier]
       elsif identifier = chunk[/\A(\<)/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:LESSTHAN, identifier]
       elsif identifier = chunk[/\A(\>)/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:GREATERTHAN, identifier]
-      elsif identifier = chunk[/\A(\<=)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:LESSTHAN_EQUALS, identifier]
-      elsif identifier = chunk[/\A(\>=)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:GREATERTHAN_EQUALS, identifier]
       elsif identifier = chunk[/\A(\;)/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:SEMICOLON, identifier]
       elsif identifier = chunk[/\A(\,)/]
         paint "Identifier : #{identifier}", :red
         parsed_tokens << [:COMMA, identifier]
+      elsif identifier = chunk[/\A(:=)/,1]
+        paint "Identifier : #{identifier}", :red
+        parsed_tokens << [:SETSLOT, identifier]
+      elsif identifier = chunk[/\A(=)/,1]
+        paint "Identifier : #{identifier}", :red
+        parsed_tokens << [:UPDATESLOT, identifier]
       elsif identifier = chunk[/\A( )+/m]
         paint "Identifier : WHITESPACE", :white
         identifier = nil
@@ -121,7 +121,7 @@ class Lexer
     parsed_tokens << [false, false]
     
     #Tokenized Output
-    puts "Parsed Tokens : #{CodeRay.scan(parsed_tokens.inspect, :ruby).encode :terminal}"
+    puts "Parsed Tokens :\n #{CodeRay.scan(parsed_tokens.pretty_inspect, :ruby).encode :terminal}"
     puts "Parsed Token Length  #{parsed_tokens.length}"
     return parsed_tokens
   end
