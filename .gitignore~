@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+tutorials/
+=======
 *.gem
 *.rbc
 .bundle
@@ -16,4 +19,4 @@ tmp
 .yardoc
 _yardoc
 doc/
-.rvmrc
+>>>>>>> 553fa43e577cbfc7756f6881298826dd56cfe224
