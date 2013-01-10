@@ -27,10 +27,10 @@ class Lexer
 
     current_char = code[i]
 
-    puts "Input code : #{code}"
+    puts "Input code : #{CodeRay.scan(code, :java).encode :terminal}"
     while i < code.size
       chunk = code[i..-1]
-      puts "#{i} - Reduce : #{chunk}"
+      paint("#{i} - Reduce : #{chunk}", :cyan)
       if identifier = chunk[/(\A[a-zA-z0-9]\w*)/,1]
         puts "Identifier size (#{identifier.size}): #{identifier}"
 
@@ -85,6 +85,9 @@ class Lexer
       elsif identifier = chunk[/\A(\,)/]
         puts "Identifier : #{identifier}"
         parsed_tokens << [:COMMA, identifier]
+      elsif identifier = chunk[/\A( )+/m]
+        puts "Identifier : WHITESPACE"
+        identifier = nil
       end
       unless identifier.nil?
         i += identifier.size        
@@ -96,7 +99,7 @@ class Lexer
     parsed_tokens << [false, false]
     
     #Tokenized Output
-    puts parsed_tokens.inspect
-
+    puts "Parsed Tokens : #{CodeRay.scan(parsed_tokens.inspect, :ruby).encode :terminal}"
+    puts "Parsed Token Length  #{parsed_tokens.length}"
   end
 end
