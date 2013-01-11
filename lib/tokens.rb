@@ -3,6 +3,6 @@ module Io
     [
      'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
      'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
-     ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list','Exception'
+     ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list','Exception','println'
     ]
 end
