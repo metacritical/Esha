@@ -33,55 +33,55 @@ class Lexer
       case chunk
       when /(\A[[:alnum:]]\w*)/ then 
         RESERVED_WORDS.include?($&) ? parsed_tokens << [$&.upcase.intern , $&] : parsed_tokens << [:IDENTIFIER, $&]
-
+        
       when /\A\(/       then parsed_tokens << [:BRACKET_OPEN,       $&]
-
+        
       when /\A\)/       then parsed_tokens << [:BRACKET_CLOSE,      $&]
-
+        
       when /\A([0-9])+/ then parsed_tokens << [:NUMBER ,            $&]
-
+        
       when /\A\".+\"/   then parsed_tokens << [:STRING ,            $&]
-
+        
       when /\A(\n)+/m   then parsed_tokens << [:NEWLINE,            $&]
 
       when /\A(\+)/     then parsed_tokens << [:PLUS,               $&]
 
       when /\A(\-)/     then parsed_tokens << [:MINUS,              $&]
-
+        
       when /\A(\*)/     then parsed_tokens << [:ASTERISK,           $&]
 
       when /\A(\/)/     then parsed_tokens << [:SLASH,              $&]
-
+        
       when /\A(\&&)/    then parsed_tokens << [:AND,                $&]
-
+        
       when /\A(\|\|)/   then parsed_tokens << [:OR,                 $&]
-
+        
       when /\A(\==)/    then parsed_tokens << [:COMPARISON,         $&]
-
+        
       when /\A\!=/      then parsed_tokens << [:NOT_EQUALS,         $&]
-
+        
       when /\A(\!)/     then parsed_tokens << [:NOT,                $&]
-
+        
       when /\A\<=/      then parsed_tokens << [:LESSTHAN_EQUALS,    $&]
-
+        
       when /\A\>=/      then parsed_tokens << [:GREATERTHAN_EQUALS, $&]
-
+        
       when /\A(\<)/     then parsed_tokens << [:LESSTHAN,           $&]
-
+        
       when /\A(\>)/     then parsed_tokens << [:GREATERTHAN,        $&]
-
+        
       when /\A(\;)/     then parsed_tokens << [:SEMICOLON,          $&]
 
       when /\A(\,)/     then parsed_tokens << [:COMMA,              $&]
-
+        
       when /\A(\:=)/    then parsed_tokens << [:SETSLOT,            $&]
 
       when /\A(\=)/     then parsed_tokens << [:UPDATESLOT,         $&]
-
+        
       when /\A([[:blank:]])+/m    then identifier = nil
-
+        
       end
-
+      
       unless $&.nil?
         i += $&.size        
       else
