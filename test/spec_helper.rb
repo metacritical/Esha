@@ -22,6 +22,8 @@ def test_code
   Car := Object clone
   a = "Poltergiest"
   property1 := "Ferrari"
+  4yoda := Object clone
+  whois := 4yoda method("yoda is the master of arts" println)
   }
 end
 
