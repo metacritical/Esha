@@ -32,87 +32,60 @@ class Lexer
       chunk = code[i..-1]
       paint("Character No : #{i}", :cyan)
       paint("- Reduce : #{chunk}", :blue)
-      if identifier = chunk[/(\A[a-zA-z0-9]\w*)/,1]
-        puts "Identifier size (#{identifier.size}): #{identifier}"
-        if RESERVED_WORDS.include?(identifier)
-          paint "Identifier : #{identifier}", :yellow
-          parsed_tokens << [identifier.upcase.intern , identifier]
-        else
-          paint "Identifier : #{identifier}", :yellow
-          parsed_tokens << [:IDENTIFIER,identifier]
-        end        
-      elsif identifier = chunk[/\A\(/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:BRACKET_OPEN , identifier]
-      elsif identifier =  chunk[/\A\)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:BRACKET_CLOSE , identifier]
-      elsif identifier = chunk[/\A([0-9])+/,1]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:NUMBER, identifier]
-      elsif identifier = chunk[/\A\".+\"/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:STRING, identifier]
-      elsif identifier = chunk[/\A(\n)+/m,1]
-        paint "Identifier : NEWLINE", :magenta
-        parsed_tokens << [:NEWLINE,"\n"]
-      elsif identifier = chunk[/\A(\+)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:PLUS, identifier]
-      elsif identifier = chunk[/\A(\-)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:MINUS, identifier]
-      elsif identifier = chunk[/\A(\*)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:ASTERISK, identifier]
-      elsif identifier = chunk[/\A(\/)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:SLASH, identifier]
-      elsif identifier = chunk[/\A(\&&)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:AND, identifier]
-      elsif identifier = chunk[/\A(\|\|)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:OR, identifier]
-      elsif identifier = chunk[/\A(\!)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:NOT, identifier]
-      elsif identifier = chunk[/\A(\==)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:COMPARISON, identifier]
-      elsif identifier = chunk[/\A\!=/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:NOT_EQUALS, identifier]
-      elsif identifier = chunk[/\A\<=/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:LESSTHAN_EQUALS, identifier]
-      elsif identifier = chunk[/\A\>=/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:GREATERTHAN_EQUALS, identifier]
-      elsif identifier = chunk[/\A(\<)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:LESSTHAN, identifier]
-      elsif identifier = chunk[/\A(\>)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:GREATERTHAN, identifier]
-      elsif identifier = chunk[/\A(\;)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:SEMICOLON, identifier]
-      elsif identifier = chunk[/\A(\,)/]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:COMMA, identifier]
-      elsif identifier = chunk[/\A(:=)/,1]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:SETSLOT, identifier]
-      elsif identifier = chunk[/\A(=)/,1]
-        paint "Identifier : #{identifier}", :red
-        parsed_tokens << [:UPDATESLOT, identifier]
-      elsif identifier = chunk[/\A( )+/m]
+      case chunk
+      when /(\A[[:alnum:]]\w*)/ then 
+        RESERVED_WORDS.include?($&) ? parsed_tokens << [$&.upcase.intern , $&] : parsed_tokens << [:IDENTIFIER, $&]
+        paint "Identifier : #{$&}", :red
+      when /\A\(/       then parsed_tokens << [:BRACKET_OPEN,       $&]
+        paint "Identifier : #{$&}", :red
+      when /\A\)/       then parsed_tokens << [:BRACKET_CLOSE,      $&]
+        paint "Identifier : #{$&}", :red
+      when /\A([0-9])+/ then parsed_tokens << [:NUMBER ,            $&]
+        paint "Identifier : #{$&}", :red
+      when /\A\".+\"/   then parsed_tokens << [:STRING ,            $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\n)+/m   then parsed_tokens << [:NEWLINE,            $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\+)/     then parsed_tokens << [:PLUS,               $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\-)/     then parsed_tokens << [:MINUS,              $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\*)/     then parsed_tokens << [:ASTERISK,           $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\/)/     then parsed_tokens << [:SLASH,              $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\&&)/    then parsed_tokens << [:AND,                $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\|\|)/   then parsed_tokens << [:OR,                 $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\==)/    then parsed_tokens << [:COMPARISON,         $&]
+        paint "Identifier : #{$&}", :red
+      when /\A\!=/      then parsed_tokens << [:NOT_EQUALS,         $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\!)/     then parsed_tokens << [:NOT,                $&]
+        paint "Identifier : #{$&}", :red
+      when /\A\<=/      then parsed_tokens << [:LESSTHAN_EQUALS,    $&]
+        paint "Identifier : #{$&}", :red
+      when /\A\>=/      then parsed_tokens << [:GREATERTHAN_EQUALS, $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\<)/     then parsed_tokens << [:LESSTHAN,           $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\>)/     then parsed_tokens << [:GREATERTHAN,        $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\;)/     then parsed_tokens << [:SEMICOLON,          $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\,)/     then parsed_tokens << [:COMMA,              $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\:=)/    then parsed_tokens << [:SETSLOT,            $&]
+        paint "Identifier : #{$&}", :red
+      when /\A(\=)/     then parsed_tokens << [:UPDATESLOT,         $&]
+        paint "Identifier : #{$&}", :red
+      when /\A([[:blank:]])+/m    then identifier = nil
         paint "Identifier : WHITESPACE", :white
-        identifier = nil
       end
-      unless identifier.nil?
-        i += identifier.size        
+
+      unless $&.nil?
+        i += $&.size        
       else
         i += 1
       end
