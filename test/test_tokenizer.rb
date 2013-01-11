@@ -29,7 +29,10 @@ describe Lexer do
     self.lexer.remove_tail_spaces.match(/\s+$/).must_be_nil
   end
   
-  it "should tokenize the given code" do
-    self.lexer.tokenize
+  it "should tokenize and output the given code" do
+    puts "Input code : #{CodeRay.scan(test_code, :java).encode :terminal}"
+    tokens = lexer.tokenize
+    puts "Parsed Tokens :\n #{CodeRay.scan(tokens.pretty_inspect, :ruby).encode :terminal}"
+    puts "Number of Tokens  #{tokens.length}"
   end
 end
