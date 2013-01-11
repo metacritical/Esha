@@ -1,13 +1,10 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    babel_bridge (0.3.1)
     coderay (1.0.8)
     ffi (1.1.5)
     minitest (4.1.0)
-    racc (1.4.9)
     rake (10.0.3)
-    rkelly (1.0.7)
     ruby-llvm (3.0.0)
       ffi (>= 1.0.0)
 
@@ -15,10 +12,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  babel_bridge
   coderay
   minitest
-  racc
   rake
-  rkelly
   ruby-llvm
