@@ -8,6 +8,8 @@ def test_code
   3 != 2
   3 > 2
   3 < 2
+  e2l2 == "punk"
+  3yoda = 1skywalker
   Person := Object clone;
   a := 1;
   b := 2;
