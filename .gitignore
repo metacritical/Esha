@@ -17,3 +17,10 @@ tmp
 _yardoc
 doc/
 .rvmrc
+bin/*.~
+*/*.~
+lang/*.rb~
+bin/lang.rb~
+lib/tokens.rb~
+src/lexer.rb~
+test/spec_helper.rb~
