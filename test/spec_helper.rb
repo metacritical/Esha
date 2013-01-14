@@ -8,6 +8,7 @@ def test_code
   3 != 2
   3 >  2
   3 <  2
+  a || b
   e2l2 == "punk"
   3yoda = 1skywalker
   Person := Object clone;
@@ -24,6 +25,11 @@ def test_code
   property1 := "Ferrari"
   4yoda := Object clone
   whois := 4yoda method("yoda is the master of arts" println)
+  ///123.1der_land
+  123.woot
+  //This is a comment
+  e := 457.234
+  f := 100123123456
   }
 end
 
