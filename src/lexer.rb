@@ -38,15 +38,16 @@ class Lexer
         else
           parsed_tokens << [:NUMBER, temp]
         end
-
+        
       when /\A\d+[(a-zA-Z_)]+|\A\d+\.[(a-zA-Z_)]+/ 
                                 then parsed_tokens << [:IDENTIFIER,          $&]
 
       when /\A([0-9])+/         then parsed_tokens << [:NUMBER,              $&]
 
       when /(\A[[:alnum:]]\w*)/ then RESERVED_WORDS.include?($&) ? 
+
                                       parsed_tokens << [$&.upcase.intern ,   $&] 
-        : 
+                                : 
                                       parsed_tokens << [:IDENTIFIER,         $&]
         
       when /\A\(/                then parsed_tokens << [:BRACKET_OPEN,       $&]
