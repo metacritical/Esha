@@ -30,9 +30,7 @@ class Lexer
           if $& == 'e' and chunk[temp.size.next] =~ /[0-9]/
             parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/]]
           else
-            raise SyntaxError,
-            "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' @ #{chunk[/\b\w*.+/]}" rescue 
-            paint("#{$!.class}\n-> #{$!.message}" , :red);exit
+            error! "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' @ #{chunk[/\b\w*.+/]}" , :red
           end
         else
           parsed_tokens << [:NUMBER, temp]
@@ -114,4 +112,12 @@ class Lexer
     #Tokenized Output
     return parsed_tokens
   end
+
+  private 
+  
+  def error!(message , color)
+    raise LexError, message rescue 
+    paint("#{$!.class}\n-> #{$!.message}" , color);exit
+  end
+
 end
