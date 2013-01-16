@@ -1,7 +1,7 @@
 require_relative '../setup'
 
 class Lexer
-  attr_accessor :code
+  attr_accessor :code , :parsed_tokens
     
   #Initialize With Code
 
@@ -12,7 +12,7 @@ class Lexer
     
   def tokenize
     #List All Parsed Tokens
-    parsed_tokens = []
+    self.parsed_tokens = []
 
     #Initialize loop variable i to zero
     i = 0
@@ -30,8 +30,9 @@ class Lexer
           if $& == 'e' and chunk[temp.size.next] =~ /[0-9]/
             parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/]]
           else
-            raise Error,
-            "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' @ #{chunk[/\b\w*.+/]}" rescue paint($!.message[/.+/], :red)
+            raise SyntaxError,
+            "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' @ #{chunk[/\b\w*.+/]}" rescue 
+            paint("#{$!.class}\n-> #{$!.message}" , :red);exit
           end
         else
           parsed_tokens << [:NUMBER, temp]
@@ -90,7 +91,7 @@ class Lexer
 
       when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&]
 
-      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,     $&]
+      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,      $&]
         
       when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&]
 
