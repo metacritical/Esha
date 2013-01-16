@@ -18,7 +18,6 @@ class Lexer
     i = 0
 
     current_char = code[i]
-
     while i < code.size
       chunk = code[i..-1]
       case chunk
@@ -61,6 +60,8 @@ class Lexer
         
       when /\A(\*)/                       then parsed_tokens << [:ASTERISK,           $&]
 
+      when /\A(\%)/                       then parsed_tokens << [:MODULUS,            $&]
+
       when /\A(\/\/.+)/                   then nil #Single Line Comment
 
       when /\A\/\*(.+(\n))+(.)+\*\//      then nil #Multi  Line Comment
@@ -98,7 +99,7 @@ class Lexer
       when /\A([[:blank:]])/              then temp = nil
 
       end
-      
+
       unless $&.nil?
         i += $&.size        
        else
@@ -112,12 +113,11 @@ class Lexer
     #Tokenized Output
     return parsed_tokens
   end
-
+    
   private 
   
   def error!(message , color)
     raise LexError, message rescue 
     paint("#{$!.class}\n-> #{$!.message}" , color);exit
   end
-
 end
