@@ -43,6 +43,7 @@ def test_code
     real ::= 0
     imag ::= 0
   )
+  7%2
   }
 end
 
