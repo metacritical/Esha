@@ -8,5 +8,5 @@ unless ARGV[0].nil?
     paint(e.message, :red)
   end
 else
-  paint("No Input File Provided", :blue)
+  paint("~= No Input File Provided =~", :blue)
 end
