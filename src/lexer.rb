@@ -55,7 +55,9 @@ class Lexer
         
       when /\A(\*)/              then parsed_tokens << [:ASTERISK,           $&]
 
-      when /\A(\/\/.+)/          then nil
+      when /\A(\/\/.+)/                   then nil #Single Line Comment
+
+      when /\A\/\*(.+(\n))+(.)+\*\//      then nil #Multi  Line Comment
 
       when /\A[(\/)]/            then parsed_tokens << [:SLASH,              $&]
         

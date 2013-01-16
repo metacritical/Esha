@@ -1,5 +1,3 @@
-require_relative '../src/lexer'
-
 def test_code
   %Q{
   3 == 2
@@ -23,6 +21,14 @@ def test_code
   Car := Object clone
   a = "Poltergiest"
   property1 := "Ferrari"
+
+    /* this is a multi line 
+  comment, this is damn easy
+  stuff to capture in regexp,
+  i wonder why people are afraid 
+  of regexp
+  */
+
   4yoda := Object clone
   whois := 4yoda method("yoda is the master of arts" println)
   ///123.1der_land

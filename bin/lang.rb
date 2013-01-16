@@ -1,4 +1,5 @@
 require_relative "../src/lexer"
+
 lexer = Lexer.new(%q{  
   3 == 2
   3 <= 2

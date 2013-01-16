@@ -1,4 +1,4 @@
-$LOAD_PATH << File.expand_path("../lib/",__FILE__)
+["../lib/","../src/","../lib/esha/"].each{ |dir| $LOAD_PATH << File.expand_path(dir,__FILE__) }
 
 require 'bundler/setup'
 require 'sanitize'
