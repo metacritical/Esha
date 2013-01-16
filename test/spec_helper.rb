@@ -22,13 +22,14 @@ def test_code
   a = "Poltergiest"
   property1 := "Ferrari"
 
-    /* this is a multi line 
-  comment, this is damn easy
-  stuff to capture in regexp,
-  i wonder why people are afraid 
-  of regexp
+  /* this is a multi line 
+     comment, which is damn easy
+     stuff to capture in regexp,
+     i wonder why people are afraid 
+     of regexp.
   */
   123.der_land
+  ///123.1der_land //Introduce Lexer Error by uncommenting
   4yoda := Object clone
   whois := 4yoda method("yoda is the master of arts" println)
   //This is a comment
