@@ -23,30 +23,30 @@ class Lexer
       chunk = code[i..-1]
       case chunk
         
-      when /\A(\d+e\d+)/                  then parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/]]
+      when /\A(\d+e\d+)|\A(\d+\.\d+e\d+)/ then parsed_tokens << [:EXPONENT ,          $&]
         
       when /\A(\d+\.\d+)/                 then temp = $&
         if chunk[$&.size] =~ /[a-zA-Z]/
           if $& == 'e' and chunk[temp.size.next] =~ /[0-9]/
             parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/]]
           else
-            raise StandardError,
+            raise Error,
             "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' @ #{chunk[/\b\w*.+/]}" rescue paint($!.message[/.+/], :red)
           end
         else
           parsed_tokens << [:NUMBER, temp]
         end
 
-      when /\A\d+[(a-zA-Z_)]+|\A\d+\.[(a-zA-Z_)]+/ 
+      when /\A\d+[(a-zA-Z_)]+|\A\d+\.[(a-zA-Z_)]*/ 
                                           then parsed_tokens << [:IDENTIFIER,         $&]
 
       when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&]
 
       when /(\A[[:alnum:]]\w*)/           then RESERVED_WORDS.include?($&) ? 
 
-                                          parsed_tokens << [$&.upcase.intern ,        $&] 
-                                    : 
-                                          parsed_tokens << [:IDENTIFIER,              $&]
+                                               parsed_tokens << [$&.upcase.intern ,   $&] 
+                                          : 
+                                               parsed_tokens << [:IDENTIFIER,         $&]
         
       when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&]
         
@@ -89,6 +89,8 @@ class Lexer
       when /\A(\;)/                       then parsed_tokens << [:SEMICOLON,          $&]
 
       when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&]
+
+      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,     $&]
         
       when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&]
 

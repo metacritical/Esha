@@ -38,6 +38,10 @@ def test_code
   3.2e5
   //123.derland := Number clone
   123.woot
+  Complex := Object Clone do(
+    real ::= 0
+    imag ::= 0
+  )
   }
 end
 

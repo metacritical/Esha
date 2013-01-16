@@ -16,6 +16,3 @@ class IOParser
        | exp '/' exp { result /= val[2] }
 
 end
-
-  
-end
