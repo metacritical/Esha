@@ -28,14 +28,16 @@ def test_code
   i wonder why people are afraid 
   of regexp
   */
-
+  123.der_land
   4yoda := Object clone
   whois := 4yoda method("yoda is the master of arts" println)
-  ///123.1der_land
-  123.woot
   //This is a comment
   e := 457.234
   f := 100123123456
+  2e5
+  3.2e5
+  //123.derland := Number clone
+  123.woot
   }
 end
 
