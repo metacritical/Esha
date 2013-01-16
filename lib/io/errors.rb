@@ -4,4 +4,7 @@ module Io
   
   class SyntaxError < Error
   end
+
+  class LexError < Error
+  end
 end
