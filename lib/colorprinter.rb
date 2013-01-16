@@ -20,9 +20,9 @@ module ColorPrinter
   ANSI_ESC        = "\e["
   ANSI_FOREGRND   = ";3"
   ANSI_BACKGRND   = ";4" #Not Used Now May Be will Extend in future if required.
-  ANSI_TERMINATOR = "\e[0m"
+  ANSI_RESET      = "\e[0m"
 
   def paint( input, color )
-    puts "#{ANSI_ESC}#{RENDITION_EFFECTS[:bright]}#{ANSI_FOREGRND}#{ANSI_COLOR_CODES[color]}m#{input}#{ANSI_TERMINATOR}"
+    puts "#{ANSI_ESC}#{RENDITION_EFFECTS[:bright]}#{ANSI_FOREGRND}#{ANSI_COLOR_CODES[color]}m#{input}#{ANSI_RESET}"
   end	
 end
