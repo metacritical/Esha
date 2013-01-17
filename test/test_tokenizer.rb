@@ -1,4 +1,4 @@
-require_relative '../setup'
+require_relative '../loader'
 require 'bundler'
 Bundler.setup(:development)
 require 'cucumber'

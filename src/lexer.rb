@@ -1,4 +1,4 @@
-require_relative '../setup'
+require_relative '../loader'
 
 class Lexer
   attr_accessor :code , :parsed_tokens

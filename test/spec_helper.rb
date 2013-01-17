@@ -7,7 +7,7 @@ def test_code
   3 >  2
   3 <  2
   a || b
-  e2l2 == "punk"
+  R2D2 == "skybot"
   3yoda = 1skywalker
   Person := Object clone;
   a := 1;
@@ -19,9 +19,9 @@ def test_code
   d - c
   -a+b*c/d;
   Car := Object clone
-  a = "Poltergiest"
-  property1 := "Ferrari";
-  
+  force = "Poltergiest"
+  zen := "Let the force be with you"
+
   /* this is a multi line 
      comment, which is damn easy
      stuff to capture in regexp,
@@ -29,10 +29,11 @@ def test_code
      of regexp.
   */
 
+  321.der_land
   ///123.1der_land //Introduce Lexer Error by uncommenting
   123.der_land
   4yoda := Object clone
-  whois := 4yoda method("yoda is the master of arts" println)
+  whois := 4yoda method("yoda the master of arts" println)
   //This is a comment
   e := 457.234
   f := 100123123456
