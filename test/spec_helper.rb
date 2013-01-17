@@ -20,16 +20,18 @@ def test_code
   -a+b*c/d;
   Car := Object clone
   a = "Poltergiest"
-  property1 := "Ferrari"
-
+  property1 := "Ferrari";
+  
   /* this is a multi line 
      comment, which is damn easy
      stuff to capture in regexp,
      i wonder why people are afraid 
      of regexp.
   */
-  123.der_land
+
   ///123.1der_land //Introduce Lexer Error by uncommenting
+  123.der_land
+  
   4yoda := Object clone
   whois := 4yoda method("yoda is the master of arts" println)
   //This is a comment
@@ -37,6 +39,7 @@ def test_code
   f := 100123123456
   2e5
   3.2e5
+  2.3e4.6
   //123.derland := Number clone
   123.woot
   Complex := Object Clone do(

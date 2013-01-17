@@ -1,4 +1,7 @@
 require_relative '../setup'
+require 'bundler'
+Bundler.setup(:development)
+require 'cucumber'
 require 'minitest/autorun'
 require 'minitest/spec'
 require_relative 'spec_helper'
