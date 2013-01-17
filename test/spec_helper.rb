@@ -52,6 +52,8 @@ def test_code
   "io is the master of mystery"
   "Wishfull thinking\n may lead \nto self deception\n"
   "\nparsing is\n ubiquitous\n - martin trevor\n"
+  1 + 2 + 3 * 6
+  1 + 2 + (3 * 6)
   }
 end
 
