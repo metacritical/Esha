@@ -27,7 +27,7 @@ class Lexer
         
       when /\A(\d+\.\d+)/                 then temp = $&
         if chunk[$&.size] =~ /[a-zA-Z]/
-          if $& == 'e' and chunk[temp.size.next] =~ /[0-9]/
+          if $& == 'e' and (chunk[temp.size.next] =~ /[0-9]/ || chunk[temp.size.next] == '-')
             parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/] , i]
           else
             error! "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' -> #{chunk[/\b\S+/]}" , :red , i
@@ -40,7 +40,7 @@ class Lexer
                                           then parsed_tokens << [:IDENTIFIER,         $&, i]
 
       when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i]
-        
+
       when /(\A[[:alnum:]]\w*)/           then RESERVED_WORDS.include?($&) ? 
 
                                                parsed_tokens << [$&.upcase.intern ,   $&, i] 
@@ -50,9 +50,9 @@ class Lexer
       when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&, i]
         
       when /\A\)/                         then parsed_tokens << [:BRACKET_CLOSE,      $&, i]
-        
-      when /\A\".+\"/                     then parsed_tokens << [:STRING ,            $&, i]
-        
+
+      when /\A".+?"/m                     then parsed_tokens << [:SEQUENCE,           $&, i]
+
       when /\A(\n)+/m                     then parsed_tokens << [:NEWLINE,            $&, i]
 
       when /\A(\+)/                       then parsed_tokens << [:PLUS,               $&, i]
