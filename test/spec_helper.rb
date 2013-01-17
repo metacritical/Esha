@@ -31,22 +31,27 @@ def test_code
 
   ///123.1der_land //Introduce Lexer Error by uncommenting
   123.der_land
-  
   4yoda := Object clone
   whois := 4yoda method("yoda is the master of arts" println)
   //This is a comment
   e := 457.234
   f := 100123123456
-  2e5
+  2e51
   3.2e5
   2.3e4.6
-  //123.derland := Number clone
+  ///123.1derland := Number clone
   123.woot
   Complex := Object Clone do(
     real ::= 0
     imag ::= 0
   )
   7%2
+  -2.3e2
+  -2.7e-2.1
+  4.6e-2
+  "io is the master of mystery"
+  "Wishfull thinking\n may lead \nto self deception\n"
+  "\nparsing is\n ubiquitous\n - martin trevor\n"
   }
 end
 
