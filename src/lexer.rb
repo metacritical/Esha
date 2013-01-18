@@ -1,10 +1,9 @@
 require_relative '../loader'
 
 class Lexer
-  attr_accessor :code , :parsed_tokens , :offset , :token
+  attr_accessor :code , :parsed_tokens , :offset , :token , :line
     
   #Initialize With Code
-
   def initialize(input_code)
     self.code = input_code
     sanitize
@@ -25,79 +24,79 @@ class Lexer
       case chunk
         
       when /\A\d+\.\d+e\d+\.\d+|\A(\d+e\d+)|\A(\d+\.\d+e\d+)/
-                                          then parsed_tokens << [:EXPONENT ,          $&, i]
+                                          then parsed_tokens << [:EXPONENT ,          $&, i , line(i)]
         
       when /\A(\d+\.\d+)/                 then temp = $&
         if chunk[$&.size] =~ /[a-zA-Z]/
           if $& == 'e' and (chunk[temp.size.next] =~ /[0-9]/ || chunk[temp.size.next] == '-')
-            parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/] , i]
+            parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/] , i, line(i)]
           else
             error! "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' -> #{chunk[/\b\S+/]}" , :red , i
           end
         else
-          parsed_tokens << [:NUMBER, temp, i]
+          parsed_tokens << [:NUMBER, temp, i, line(i)]
         end
 
       when /\A\d+[a-zA-Z_]+|\A\d+\.[a-zA-Z_]+/ 
-                                          then parsed_tokens << [:IDENTIFIER,         $&, i]
+                                          then parsed_tokens << [:IDENTIFIER,         $&, i, line(i)]
 
-      when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i]
+      when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i, line(i)]
 
       when /(\A[[:alnum:]]\w*)/           then RESERVED_WORDS.include?($&) ? 
 
-                                               parsed_tokens << [$&.upcase.intern ,   $&, i] 
+                                               parsed_tokens << [$&.upcase.intern ,   $&, i, line(i)] 
                                           : 
-                                               parsed_tokens << [:IDENTIFIER,         $&, i]
+                                               parsed_tokens << [:IDENTIFIER,         $&, i, line(i)]
 
-      when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&, i]
+      when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&, i, line(i)]
         
-      when /\A\)/                         then parsed_tokens << [:BRACKET_CLOSE,      $&, i]
+      when /\A\)/                         then parsed_tokens << [:BRACKET_CLOSE,      $&, i, line(i)]
 
-      when /\A".+?"/m                     then parsed_tokens << [:SEQUENCE,           $&, i]
+      when /\A".+?"/m                     then parsed_tokens << [:SEQUENCE,           $&, i, line(i)]
 
-      when /\A(\n)+/m                     then parsed_tokens << [:NEWLINE,            $&, i]
+      when /\A(\n)+/m                     then parsed_tokens << [:NEWLINE,            $&, i, line(i)]
 
-      when /\A(\+)/                       then parsed_tokens << [:PLUS,               $&, i]
+      when /\A(\+)/                       then parsed_tokens << [:PLUS,               $&, i, line(i)]
 
-      when /\A(\-)/                       then parsed_tokens << [:MINUS,              $&, i]
+      when /\A(\-)/                       then parsed_tokens << [:MINUS,              $&, i, line(i)]
         
-      when /\A(\*)/                       then parsed_tokens << [:ASTERISK,           $&, i]
+      when /\A(\*)/                       then parsed_tokens << [:ASTERISK,           $&, i, line(i)]
 
-      when /\A(\%)/                       then parsed_tokens << [:MODULUS,            $&, i]
+      when /\A(\%)/                       then parsed_tokens << [:MODULUS,            $&, i, line(i)]
 
       when /\A(\/\/.+)/                   then nil #Single Line Comment
 
       when /\A\/\*(.+(\n))+(.)+\*\//      then nil #Multi  Line Comment
 
-      when /\A[(\/)]/                     then parsed_tokens << [:SLASH,              $&, i]
+      when /\A[(\/)]/                     then parsed_tokens << [:SLASH,              $&, i, line(i)]
         
-      when /\A(\&&)/                      then parsed_tokens << [:AND,                $&, i]
+      when /\A(\&&)/                      then parsed_tokens << [:AND,                $&, i, line(i)]
         
-      when /\A(\|\|)/                     then parsed_tokens << [:OR,                 $&, i]
+      when /\A(\|\|)/                     then parsed_tokens << [:OR,                 $&, i, line(i)]
         
-      when /\A(\==)/                      then parsed_tokens << [:COMPARISON,         $&, i]
+      when /\A(\==)/                      then parsed_tokens << [:COMPARISON,         $&, i, line(i)]
         
-      when /\A\!=/                        then parsed_tokens << [:NOT_EQUALS,         $&, i]
+      when /\A\!=/                        then parsed_tokens << [:NOT_EQUALS,         $&, i, line(i)]
         
-      when /\A(\!)/                       then parsed_tokens << [:NOT,                $&, i]
+      when /\A(\!)/                       then parsed_tokens << [:NOT,                $&, i, line(i)]
         
-      when /\A\<=/                        then parsed_tokens << [:LESSTHAN_EQUALS,    $&, i]
+      when /\A\<=/                        then parsed_tokens << [:LESSTHAN_EQUALS,    $&, i, line(i)]
         
-      when /\A\>=/                        then parsed_tokens << [:GREATERTHAN_EQUALS, $&, i]
+      when /\A\>=/                        then parsed_tokens << [:GREATERTHAN_EQUALS, $&, i, line(i)]
         
-      when /\A(\<)/                       then parsed_tokens << [:LESSTHAN,           $&, i]
+      when /\A(\<)/                       then parsed_tokens << [:LESSTHAN,           $&, i, line(i)]
         
-      when /\A(\>)/                       then parsed_tokens << [:GREATERTHAN,        $&, i]
+      when /\A(\>)/                       then parsed_tokens << [:GREATERTHAN,        $&, i, line(i)]
         
-      when /\A(\;)/                       then parsed_tokens << [:SEMICOLON,          $&, i]
+      when /\A(\;)/                       then parsed_tokens << [:SEMICOLON,          $&, i, line(i)]
 
-      when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&, i]
+      when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&, i, line(i)]
 
-      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,      $&, i]
+      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,      $&, i, line(i)]
         
-      when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&, i]
+      when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&, i, line(i)]
 
-      when /\A(\=)/                       then parsed_tokens << [:UPDATESLOT,         $&, i]
+      when /\A(\=)/                       then parsed_tokens << [:UPDATESLOT,         $&, i, line(i)]
 
       when /\A([[:blank:]])/              then temp = nil
 
@@ -111,7 +110,7 @@ class Lexer
     end
 
     #End the token with false
-    parsed_tokens << [false, false]
+    parsed_tokens << [false, false , false]
     
     #Tokenized Output
     return parsed_tokens
@@ -126,16 +125,18 @@ class Lexer
     reset_offset if offset > parsed_tokens.length #Reset offset if end of tokens is reached
     token = parsed_tokens[offset]
     @offset = offset + 1 
-    return token
+    #return token
+    Token.new(token)
   end
     
   private 
   def error!(message , color , char_count)
     raise LexError, message rescue 
-    paint("#{$!.class}\n-> #{$!.message} :: #{line_finder char_count}" , color);exit
+    paint("#{$!.class}\n-> #{$!.message} :: #{line char_count}" , color);exit
   end
-
-  def line_finder(character)
+  
+  #Utility methods
+  def line(character)
     count = 0
     self.code.lines.each_with_index do |each,index|
       if index == 0  
@@ -143,13 +144,9 @@ class Lexer
       else    
         count = count + each.size    
         if count >= character
-          return "Line no: #{index + 1}"      
+          return index + 1
         end  
       end  
     end  
   end
 end
-
-
-
-
