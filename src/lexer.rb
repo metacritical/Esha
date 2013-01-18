@@ -8,7 +8,7 @@ class Lexer
   def initialize(input_code)
     self.code = input_code
     sanitize
-    reset_token
+    reset_offset
     tokenize
   end
     
