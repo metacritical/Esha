@@ -1,10 +1,10 @@
 module Io
-  class Error < StandardError
+  class IOError < StandardError
   end
   
-  class SyntaxError < Error
+  class SyntaxError < IOError
   end
 
-  class LexError < Error
+  class LexError < IOError
   end
 end
