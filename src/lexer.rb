@@ -1,13 +1,15 @@
 require_relative '../loader'
 
 class Lexer
-  attr_accessor :code , :parsed_tokens
+  attr_accessor :code , :parsed_tokens , :offset , :token
     
   #Initialize With Code
 
   def initialize(input_code)
     self.code = input_code
     sanitize
+    reset_token
+    tokenize
   end
     
   def tokenize
@@ -114,6 +116,19 @@ class Lexer
     #Tokenized Output
     return parsed_tokens
   end
+
+  def reset_offset
+    self.offset = 0
+    self.token = []
+  end
+
+  def read_token
+    reset_offset if offset > parsed_tokens.length #Reset offset if end of tokens is reached
+    token = parsed_tokens[offset]
+    puts "Offset : #{offset}"
+    @offset = offset + 1 
+    return token
+  end
     
   private 
   def error!(message , color , char_count)
@@ -127,7 +142,7 @@ class Lexer
       if index == 0  
         count = each.size    
       else    
-        count = count+ each.size    
+        count = count + each.size    
         if count >= character
           return "Line no: #{index + 1}"      
         end  
@@ -135,3 +150,7 @@ class Lexer
     end  
   end
 end
+
+
+
+
