@@ -33,7 +33,7 @@ describe Lexer do
   end
   
   it "should tokenize and output the given code" do
-    puts "Input code : #{ code_print(test_code,:java) }"
+    puts "Input code : #{ code_print(test_code, :ruby) }"
     tokens = lexer.tokenize
     puts "Parsed Tokens :\n #{ code_print(tokens.pretty_inspect, :ruby) }"
     puts "Number of Tokens  #{tokens.length}"
@@ -42,6 +42,6 @@ describe Lexer do
   it "should read token sequentially using read_token method" do
     lexer_instance = lexer
     total_tokens = lexer_instance.tokenize.size
-    total_tokens.times{|count| puts "Count : #{count} : #{code_print(lexer_instance.read_token, :python) }" }
+    total_tokens.times{|count| puts "Count : #{count} :\n #{ code_print(lexer_instance.read_token.pretty_inspect, :java) }" }
   end
 end
