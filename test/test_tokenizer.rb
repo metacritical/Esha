@@ -23,10 +23,6 @@ describe Lexer do
   it "should remove newline \\n character from beginning and end of string" do 
     lexer.remove_new_line.scan(/^(\n)+/).first.wont_equal "\n"
   end
-
-  it "should remove extra white space from inside the code" do 
-    skip "should remove extra white space from inside the code" #self.lexer.remove_white_space.scan(/\s+/).first.size.must_be :< , 2
-  end
   
   it "should replace extra whitespaces from beginning of string" do
     self.lexer.remove_tail_spaces.match(/^\s/).must_be_nil
@@ -37,9 +33,15 @@ describe Lexer do
   end
   
   it "should tokenize and output the given code" do
-    puts "Input code : #{CodeRay.scan(test_code, :java).encode :terminal}"
+    puts "Input code : #{ code_print(test_code,:java) }"
     tokens = lexer.tokenize
-    puts "Parsed Tokens :\n #{CodeRay.scan(tokens.pretty_inspect, :ruby).encode :terminal}"
+    puts "Parsed Tokens :\n #{ code_print(tokens.pretty_inspect, :ruby) }"
     puts "Number of Tokens  #{tokens.length}"
+  end
+
+  it "should read token sequentially using read_token method" do
+    lexer_instance = lexer
+    total_tokens = lexer_instance.tokenize.size
+    total_tokens.times{|count| puts "Count : #{count} : #{code_print(lexer_instance.read_token, :python) }" }
   end
 end

@@ -58,6 +58,10 @@ def test_code
   }
 end
 
+def code_print(message, lang)
+  CodeRay.scan(message, lang).encode :terminal
+end
+
 
 =begin
 #A thought on how to design the objects in the tree

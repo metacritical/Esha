@@ -125,7 +125,6 @@ class Lexer
   def read_token
     reset_offset if offset > parsed_tokens.length #Reset offset if end of tokens is reached
     token = parsed_tokens[offset]
-    puts "Offset : #{offset}"
     @offset = offset + 1 
     return token
   end
