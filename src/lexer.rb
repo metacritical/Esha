@@ -124,11 +124,15 @@ class Lexer
   def read_token
     reset_offset if offset > parsed_tokens.length #Reset offset if end of tokens is reached
     token = parsed_tokens[offset]
-    @offset = offset + 1 
-    #return token
+    self.offset = offset + 1 
     Token.new(token)
   end
-    
+
+  def look_ahead
+    parsed_tokens[offset + 1] unless nil
+  end
+
+  #Private Error and Utility methods.    
   private 
   def error!(message , color , char_count)
     raise LexError, message rescue 
