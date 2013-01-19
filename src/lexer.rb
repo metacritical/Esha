@@ -22,21 +22,21 @@ class Lexer
       case chunk
         
       when /\A\d+\.\d+e\d+\.\d+|\A(\d+e\d+)|\A(\d+\.\d+e\d+)/
-                                          then parsed_tokens << [:EXPONENT ,          $&, i , getline(i)]
-        
+                                          then parsed_tokens << [:EXPONENT ,          $&, i, getline(i)]
+
       when /\A(\d+\.\d+)/                 then temp = $&
         if chunk[$&.size] =~ /[a-zA-Z]/
           if $& == 'e' and (chunk[temp.size.next] =~ /[0-9]/ || chunk[temp.size.next] == '-')
             parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/] , i, getline(i)]
           else
-            error! "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' -> #{chunk[/\b\S+/]}" , :red , i
+            error! "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' -> #{chunk[/\b\S+/]}" ,  i
           end
         else
           parsed_tokens << [:NUMBER, temp, i, getline(i)]
         end
 
       when /\A\d+[a-zA-Z_]+|\A\d+\.[a-zA-Z_]+/ 
-                                          then parsed_tokens << [:IDENTIFIER,         $&, i, getline(i)]
+                                          then parsed_tokens << [:IDENTIFIER,         $&, i, getline(i)]        
 
       when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i, getline(i)]
 
@@ -132,15 +132,15 @@ class Lexer
 
   #Private Error and Utility methods.    
   private 
-  def error!(message , color , char_count)
+  def error!(message , char_count)
     raise LexError, message rescue 
-    paint("#{$!.class}\n-> #{$!.message} :: #{line char_count}" , color);exit
+    paint("#{$!.class}\n-> #{$!.message} :: #{line char_count}", :red);exit
   end
   
   #Utility methods
   def getline(character)
     count = 0
-    self.code.lines.each_with_index do |each,index|
+    code.lines.each_with_index do |each,index|
       if index == 0  
         count = each.size    
       else    
