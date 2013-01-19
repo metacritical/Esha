@@ -44,4 +44,14 @@ describe Lexer do
     total_tokens = lexer_instance.tokenize.size
     total_tokens.times{|count| puts "Count : #{count} :\n #{ code_print(lexer_instance.read_token.pretty_inspect, :java) }" }
   end
+
+  it "should be able to read the current token and look_ahead one token" do
+    lexer_instance = lexer
+    total_tokens = lexer_instance.tokenize.size
+    total_tokens.times do |count|
+      print "#{ paint("Count :#{count}", :red)}
+      Current Token   : #{ code_print(lexer_instance.read_token.pretty_inspect, :java) }
+      Lookahead Token : #{ code_print(lexer_instance.look_ahead.pretty_inspect, :java) }" 
+    end
+  end
 end

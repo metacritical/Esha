@@ -55,7 +55,7 @@ def test_code
   "\nparsing is\n ubiquitous\n - martin trevor\n"
   1 + 2 + 3 * 6
   1 + 2 + (3 * 6)
-  if(a == 1, writeln("a is one"), writeln("a is not one"))
+  if( a == 1, writeln("a is one"), writeln("a is not one") )
   }
 end
 
