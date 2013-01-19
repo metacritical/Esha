@@ -142,11 +142,11 @@ class Lexer
     count = 0
     code.lines.each_with_index do |each,index|
       if index == 0  
-        count = each.size    
+        count = each.size
       else    
         count = count + each.size    
         if count >= character
-          return index + 1
+          index + 1
         end  
       end  
     end  

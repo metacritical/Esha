@@ -1,4 +1,4 @@
-["../lib/","../src/","../lib/io/","../lib/ext/"].each{ |dir| $LOAD_PATH << File.expand_path(dir,__FILE__) }
+["../lib/","../src/","../lib/io/","../lib/ext/", "../lib/ast/"].each{ |dir| $LOAD_PATH << File.expand_path(dir,__FILE__) }
 
 require 'bundler/setup'
 require 'lexer'

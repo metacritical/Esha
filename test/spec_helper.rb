@@ -56,6 +56,7 @@ def test_code
   1 + 2 + 3 * 6
   1 + 2 + (3 * 6)
   if( a == 1, writeln("a is one"), writeln("a is not one") )
+  Person := Object clone
   }
 end
 
