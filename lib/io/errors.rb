@@ -8,6 +8,6 @@ module Io
   class LexError < IOError
   end
   
-  class ParseError < LexError
+  class ParseError < SyntaxError
   end
 end
