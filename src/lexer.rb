@@ -1,5 +1,3 @@
-require_relative '../loader'
-
 class Lexer
   attr_accessor :code , :parsed_tokens , :offset , :token , :line
     
@@ -24,79 +22,79 @@ class Lexer
       case chunk
         
       when /\A\d+\.\d+e\d+\.\d+|\A(\d+e\d+)|\A(\d+\.\d+e\d+)/
-                                          then parsed_tokens << [:EXPONENT ,          $&, i , line(i)]
+                                          then parsed_tokens << [:EXPONENT ,          $&, i , getline(i)]
         
       when /\A(\d+\.\d+)/                 then temp = $&
         if chunk[$&.size] =~ /[a-zA-Z]/
           if $& == 'e' and (chunk[temp.size.next] =~ /[0-9]/ || chunk[temp.size.next] == '-')
-            parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/] , i, line(i)]
+            parsed_tokens << [:EXPONENT , chunk[/\b\w*.+/] , i, getline(i)]
           else
             error! "Number does not respond to : '#{chunk[/[a-zA-Z]+\w*/]}' -> #{chunk[/\b\S+/]}" , :red , i
           end
         else
-          parsed_tokens << [:NUMBER, temp, i, line(i)]
+          parsed_tokens << [:NUMBER, temp, i, getline(i)]
         end
 
       when /\A\d+[a-zA-Z_]+|\A\d+\.[a-zA-Z_]+/ 
-                                          then parsed_tokens << [:IDENTIFIER,         $&, i, line(i)]
+                                          then parsed_tokens << [:IDENTIFIER,         $&, i, getline(i)]
 
-      when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i, line(i)]
+      when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i, getline(i)]
 
       when /(\A[[:alnum:]]\w*)/           then RESERVED_WORDS.include?($&) ? 
 
-                                               parsed_tokens << [$&.upcase.intern ,   $&, i, line(i)] 
+                                               parsed_tokens << [$&.upcase.intern ,   $&, i, getline(i)] 
                                           : 
-                                               parsed_tokens << [:IDENTIFIER,         $&, i, line(i)]
+                                               parsed_tokens << [:IDENTIFIER,         $&, i, getline(i)]
 
-      when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&, i, line(i)]
+      when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&, i, getline(i)]
         
-      when /\A\)/                         then parsed_tokens << [:BRACKET_CLOSE,      $&, i, line(i)]
+      when /\A\)/                         then parsed_tokens << [:BRACKET_CLOSE,      $&, i, getline(i)]
 
-      when /\A".+?"/m                     then parsed_tokens << [:SEQUENCE,           $&, i, line(i)]
+      when /\A".+?"/m                     then parsed_tokens << [:SEQUENCE,           $&, i, getline(i)]
 
-      when /\A(\n)+/m                     then parsed_tokens << [:NEWLINE,            $&, i, line(i)]
+      when /\A(\n)+/m                     then parsed_tokens << [:NEWLINE,            $&, i, getline(i)]
 
-      when /\A(\+)/                       then parsed_tokens << [:PLUS,               $&, i, line(i)]
+      when /\A(\+)/                       then parsed_tokens << [:PLUS,               $&, i, getline(i)]
 
-      when /\A(\-)/                       then parsed_tokens << [:MINUS,              $&, i, line(i)]
+      when /\A(\-)/                       then parsed_tokens << [:MINUS,              $&, i, getline(i)]
         
-      when /\A(\*)/                       then parsed_tokens << [:ASTERISK,           $&, i, line(i)]
+      when /\A(\*)/                       then parsed_tokens << [:ASTERISK,           $&, i, getline(i)]
 
-      when /\A(\%)/                       then parsed_tokens << [:MODULUS,            $&, i, line(i)]
+      when /\A(\%)/                       then parsed_tokens << [:MODULUS,            $&, i, getline(i)]
 
       when /\A(\/\/.+)/                   then nil #Single Line Comment
 
       when /\A\/\*(.+(\n))+(.)+\*\//      then nil #Multi  Line Comment
 
-      when /\A[(\/)]/                     then parsed_tokens << [:SLASH,              $&, i, line(i)]
+      when /\A[(\/)]/                     then parsed_tokens << [:SLASH,              $&, i, getline(i)]
         
-      when /\A(\&&)/                      then parsed_tokens << [:AND,                $&, i, line(i)]
+      when /\A(\&&)/                      then parsed_tokens << [:AND,                $&, i, getline(i)]
         
-      when /\A(\|\|)/                     then parsed_tokens << [:OR,                 $&, i, line(i)]
+      when /\A(\|\|)/                     then parsed_tokens << [:OR,                 $&, i, getline(i)]
         
-      when /\A(\==)/                      then parsed_tokens << [:COMPARISON,         $&, i, line(i)]
+      when /\A(\==)/                      then parsed_tokens << [:COMPARISON,         $&, i, getline(i)]
         
-      when /\A\!=/                        then parsed_tokens << [:NOT_EQUALS,         $&, i, line(i)]
+      when /\A\!=/                        then parsed_tokens << [:NOT_EQUALS,         $&, i, getline(i)]
         
-      when /\A(\!)/                       then parsed_tokens << [:NOT,                $&, i, line(i)]
+      when /\A(\!)/                       then parsed_tokens << [:NOT,                $&, i, getline(i)]
         
-      when /\A\<=/                        then parsed_tokens << [:LESSTHAN_EQUALS,    $&, i, line(i)]
+      when /\A\<=/                        then parsed_tokens << [:LESSTHAN_EQUALS,    $&, i, getline(i)]
         
-      when /\A\>=/                        then parsed_tokens << [:GREATERTHAN_EQUALS, $&, i, line(i)]
+      when /\A\>=/                        then parsed_tokens << [:GREATERTHAN_EQUALS, $&, i, getline(i)]
         
-      when /\A(\<)/                       then parsed_tokens << [:LESSTHAN,           $&, i, line(i)]
+      when /\A(\<)/                       then parsed_tokens << [:LESSTHAN,           $&, i, getline(i)]
         
-      when /\A(\>)/                       then parsed_tokens << [:GREATERTHAN,        $&, i, line(i)]
+      when /\A(\>)/                       then parsed_tokens << [:GREATERTHAN,        $&, i, getline(i)]
         
-      when /\A(\;)/                       then parsed_tokens << [:SEMICOLON,          $&, i, line(i)]
+      when /\A(\;)/                       then parsed_tokens << [:SEMICOLON,          $&, i, getline(i)]
 
-      when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&, i, line(i)]
+      when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&, i, getline(i)]
 
-      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,      $&, i, line(i)]
+      when /\A(\::=)/                     then parsed_tokens << [:GETTER_SETTER,      $&, i, getline(i)]
         
-      when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&, i, line(i)]
+      when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&, i, getline(i)]
 
-      when /\A(\=)/                       then parsed_tokens << [:UPDATESLOT,         $&, i, line(i)]
+      when /\A(\=)/                       then parsed_tokens << [:UPDATESLOT,         $&, i, getline(i)]
 
       when /\A([[:blank:]])/              then temp = nil
 
@@ -140,7 +138,7 @@ class Lexer
   end
   
   #Utility methods
-  def line(character)
+  def getline(character)
     count = 0
     self.code.lines.each_with_index do |each,index|
       if index == 0  
