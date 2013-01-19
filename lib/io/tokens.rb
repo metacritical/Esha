@@ -1,10 +1,10 @@
 module Io
   RESERVED_WORDS = 
     [
-     'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Date', 'Socket', 
+     'Object','Lobby','Protos', 'Number', 'File','String', 'Vector', 'Sequence', 'List', 'Map', 'Date', 'Socket', 
      'URL', 'Directory', 'Scheduler','System' , 'Networking', 'XML' , 'Future', 'Call', 'Coroutine', '(',
-     ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list','Exception','println', 'forward', 'exit',
-     'do', 'if'
+     ')', ':=', ',', 'clone', 'method', '+', '-', '*', '/','list','Exception','println', 'print', 'forward', 'exit',
+     'do', 'if', 'at', 'return' , 'self', 'type','nil' ,'and', 'or', 'not'
     ]
 
   class Token
