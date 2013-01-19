@@ -1,0 +1,4 @@
+1) Use RED color coding for Error Messages during tokenisation , mostly syntax Error"
+2) Use BLUE for non trivial Errors
+3) Use System default color for everything else.
+

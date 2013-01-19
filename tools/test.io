@@ -1,0 +1,1 @@
+Person := Object clone
