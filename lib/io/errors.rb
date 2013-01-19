@@ -7,4 +7,7 @@ module Io
 
   class LexError < IOError
   end
+  
+  class ParseError < LexError
+  end
 end
