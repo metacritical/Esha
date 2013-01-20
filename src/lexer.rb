@@ -64,7 +64,7 @@ class Lexer
 
       when /\A(\/\/.+)/                   then nil #Single Line Comment
 
-      when /\A\/\*(.+(\n))+(.)+\*\//      then nil #Multi  Line Comment
+      when /\A\/\*.+?\*\//m               then nil #Multi  Line Comment (.+(\n))+(.)+
 
       when /\A[(\/)]/                     then parsed_tokens << [:SLASH,              $&, i, getline(i)]
         
@@ -133,21 +133,16 @@ class Lexer
   #Private Error and Utility methods.    
   private 
   def error!(message , char_count)
-    raise LexError, message rescue 
-    paint("#{$!.class}\n-> #{$!.message} :: #{line char_count}", :red);exit
+    raise LexError, message rescue paint("#{$!.class}\n-> #{$!.message} :: #{getline char_count}", :red);exit
   end
   
   #Utility methods
   def getline(character)
     count = 0
     code.lines.each_with_index do |each,index|
-      if index == 0  
-        count = each.size
-      else    
-        count = count + each.size    
-        if count >= character
-          index + 1
-        end  
+      index.zero? ? count = each.size : count = count + each.size
+      if count >= character
+        return index + 1
       end  
     end  
   end
