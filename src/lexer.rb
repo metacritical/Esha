@@ -35,7 +35,7 @@ class Lexer
           parsed_tokens << [:NUMBER, temp, i, getline(i)]
         end
 
-      when /\A\d+[a-zA-Z_]+|\A\d+\.[a-zA-Z_]+/ 
+      when /\A\d+[a-zA-Z_]+|\A\d+\.[a-zA-Z_]+/
                                           then parsed_tokens << [:IDENTIFIER,         $&, i, getline(i)]        
 
       when /\A([0-9])+/                   then parsed_tokens << [:NUMBER,             $&, i, getline(i)]
@@ -48,7 +48,11 @@ class Lexer
 
       when /\A\(/                         then parsed_tokens << [:BRACKET_OPEN,       $&, i, getline(i)]
         
-      when /\A\)/                         then parsed_tokens << [:BRACKET_CLOSE,      $&, i, getline(i)]
+      when /\A\{/                         then parsed_tokens << [:CURLY_BRACKET,      $&, i, getline(i)]
+        
+      when /\A\[/                         then parsed_tokens << [:SQUARE_BRACKET,     $&, i, getline(i)]
+
+      when /\A\)|\A\}|\A\]/               then parsed_tokens << [:BRACKET_CLOSE,      $&, i, getline(i)]
 
       when /\A".+?"/m                     then parsed_tokens << [:SEQUENCE,           $&, i, getline(i)]
 
@@ -64,7 +68,7 @@ class Lexer
 
       when /\A(\/\/.+)/                   then nil #Single Line Comment
 
-      when /\A\/\*.+?\*\//m               then nil #Multi  Line Comment (.+(\n))+(.)+
+      when /\A\/\*.+?\*\//m               then nil #Multi  Line Comment
 
       when /\A[(\/)]/                     then parsed_tokens << [:SLASH,              $&, i, getline(i)]
         
