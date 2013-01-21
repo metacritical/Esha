@@ -1,7 +1,12 @@
 module Io::AST
-  class SetSlot < IOCore
-    attr_accessor :slot_name , :slot_value
+  class Setslot < IOCore
+    attr_accessor :slot_name , :slot_value , :left , :right
     
+    def initialize
+    
+    end
+
+
     def traverse
     end
   end

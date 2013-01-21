@@ -7,6 +7,14 @@ module Io
      'do', 'if', 'at', 'return' , 'self', 'type','nil' ,'and', 'or', 'not'
     ]
 
+  TOKENS = 
+    [
+     :IDENTIFIER, :NUMBER, :BRACKET_OPEN, :CURLY_BRACKET, :SQUARE_BRACKET, :BRACKET_CLOSE, :SEQUENCE, :NEWLINE, :PLUS,
+     :MINUS, :ASTERISK, :MODULUS, :SLASH, :AND, :OR, :COMPARISON, :NOT_EQUALS, :NOT, :LESSTHAN_EQUALS, :GREATERTHAN_EQUALS,
+     :LESSTHAN, :GREATERTHAN, :SEMICOLON, :COMMA, :GETTER_SETTER, :SETSLOT, :UPDATESLOT, :EXPONENT
+    ]
+
+
   class Token
     attr_accessor :type , :value , :line , :column
     def initialize(token)

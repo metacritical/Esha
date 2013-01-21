@@ -20,18 +20,6 @@ describe Lexer do
     self.lexer.code.must_be_instance_of String
   end
   
-  it "should remove newline \\n character from beginning and end of string" do 
-    lexer.remove_new_line.scan(/^(\n)+/).first.wont_equal "\n"
-  end
-  
-  it "should replace extra whitespaces from beginning of string" do
-    self.lexer.remove_tail_spaces.match(/^\s/).must_be_nil
-  end
-  
-  it "should replace extra whitespaces from end of string" do
-    self.lexer.remove_tail_spaces.match(/\s+$/).must_be_nil
-  end
-  
   it "should tokenize and output the given code" do
     puts "Input code : #{ code_print(test_code, :ruby) }"
     tokens = lexer.tokenize
