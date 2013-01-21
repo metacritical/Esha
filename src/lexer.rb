@@ -131,7 +131,7 @@ class Lexer
   end
 
   def look_ahead
-    next_tok = parsed_tokens[offset + 1] unless nil
+    next_tok = parsed_tokens[ offset ] unless nil
     Token.new(next_tok)
   end
 
