@@ -3,6 +3,7 @@
 require 'bundler/setup'
 require 'lexer'
 require 'parser'
+require 'ast'
 require 'sanitize'
 require 'tokens'
 require 'errors'
