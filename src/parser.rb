@@ -8,14 +8,16 @@ class Parser
 
   def parse
     read_token
-    unless look_ahead.nil?
-      case look_ahead.type
-      when :SETSLOT    then setslot
-      when :IDENTIFIER then identifier
+    while @read_token
+      case look_ahead.type 
+      when :IDENTIFIER then expressions << identifier if identifier
+      when :SETSLOT then expressions << setslot if setslot
       end
-    end
+      read_token
+    end rescue nil
+    puts expressions.pretty_inspect
   end
-  
+
   private
   def error!(message , tok_obj)
     raise ParseError, message rescue paint("#{message} :: #{tok_obj.line}", :red);exit
@@ -31,7 +33,7 @@ class Parser
 
   def setslot
     check_type(token)
-    AST::Setslot.new
+    AST::Setslot.new({:left => @token  , :right => look_ahead})
   end
 
   def identifier
