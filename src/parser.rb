@@ -11,7 +11,7 @@ class Parser
     unless look_ahead.nil?
       case look_ahead.type
       when :SETSLOT    then setslot
-      when :IDENTIFIER then setlabel
+      when :IDENTIFIER then identifier
       end
     end
   end
@@ -34,7 +34,7 @@ class Parser
     AST::Setslot.new
   end
 
-  def setlabel
+  def identifier
   end
 
   def look_ahead

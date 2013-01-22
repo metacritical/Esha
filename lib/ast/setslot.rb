@@ -3,9 +3,7 @@ module Io::AST
     attr_accessor :slot_name , :slot_value , :left , :right
     
     def initialize
-    
     end
-
 
     def traverse
     end
