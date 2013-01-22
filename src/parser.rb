@@ -4,15 +4,12 @@ class Parser
   def initialize(lexer)
     self.lexer = lexer
     self.expressions = []
+    self.read_token = read_token
   end
 
   def parse
-    read_token
     while @read_token
-      case look_ahead.type 
-      when :IDENTIFIER then expressions << identifier if identifier
-      when :SETSLOT then expressions << setslot if setslot
-      end
+      expressions << statement if statement
       read_token
     end rescue nil
     puts expressions.pretty_inspect
@@ -31,18 +28,29 @@ class Parser
     self.token = self.read_token = lexer.read_token
   end
 
+  def statement
+    return stmt = 
+      case @read_token.type 
+      when :IDENTIFIER then return identifier
+      when :SETSLOT    then return setslot
+      end
+  end
+
   def setslot
     check_type(token)
-    AST::Setslot.new({:left => @token  , :right => look_ahead})
+    AST::Setslot.new({ :left => @token  , :right => look_ahead })
   end
 
   def identifier
+    check_type(token)
+    if look_ahead.type == :SETSLOT
+      setslot
+    else
+      AST::Identifier.new({:left => @token  , :right => look_ahead})
+    end
   end
 
   def look_ahead
     lexer.look_ahead
-  end
-
-  def statement
   end
 end
