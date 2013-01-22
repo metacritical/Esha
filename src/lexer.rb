@@ -130,25 +130,16 @@ class Lexer
     Token.new(token)
   end
 
-  def look_ahead(options={})
-    unless options[:offset].nil?
-      off_set = offset + options[:offset]
-    else
-      off_set = offset
-    end
-    next_tok =  parsed_tokens[off_set]
+  def look_ahead
+    next_tok = parsed_tokens[offset]
     Token.new(next_tok) unless next_tok.nil?
   end
 
-  def look_behind(options={})
-    unless options[:offset].nil?
-      off_set = offset - options[:offset]
-    else
-      off_set = offset - 1
-    end
-    prev_tok =  parsed_tokens[off_set]
-    Token.new(prev_tok) unless prev_tok.nil?
+  def look_ahead
+    next_tok = parsed_tokens[offset - 1]
+    Token.new(next_tok) unless next_tok.nil?
   end
+
 
 
 
