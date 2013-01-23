@@ -38,8 +38,9 @@ describe Lexer do
     total_tokens = lexer_instance.tokenize.size
     total_tokens.times do |count|
       print "#{ paint("Count :#{count}", :red)}
-      Current Token   : #{ code_print(lexer_instance.read_token.pretty_inspect, :java) }
-      Lookahead Token : #{ code_print(lexer_instance.look_ahead.pretty_inspect, :java) }" 
+      Current Token : #{ code_print(lexer_instance.read_token.pretty_inspect, :java) }
+      Lookbehind Token  : #{ code_print(lexer_instance.look_ahead.pretty_inspect, :java) }" 
+      
     end
   end
 end

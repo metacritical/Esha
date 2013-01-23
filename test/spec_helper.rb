@@ -60,9 +60,10 @@ def test_code
   }
 end
 
-def code_print(message, lang)
-  CodeRay.scan(message, lang).encode :terminal
+def simple_code
+  %Q{Person := Object clone}
 end
+
 
 
 =begin
