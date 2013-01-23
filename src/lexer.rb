@@ -117,35 +117,30 @@ class Lexer
     #Tokenized Output
     return parsed_tokens
   end
-
+  
   def reset_offset
     self.offset = 0
     self.token = []
   end
-
+  
+  #Reset offset if end of tokens is reached
   def read_token
-    reset_offset if offset > parsed_tokens.length #Reset offset if end of tokens is reached
+    reset_offset if offset > parsed_tokens.length
     token = parsed_tokens[offset]
     self.offset = offset + 1 
     Token.new(token)
   end
-
+  
   def look_ahead
     next_tok = parsed_tokens[offset]
     Token.new(next_tok) unless next_tok.nil?
   end
-
-  def look_ahead
-    next_tok = parsed_tokens[offset - 1]
-    Token.new(next_tok) unless next_tok.nil?
+  
+  def look_behind
+    prev_tok = parsed_tokens[offset - 1]
+    Token.new(prev_tok) unless prev_tok.nil?
   end
-
-
-
-
-
-
-
+  
   #Private Error and Utility methods.    
   private 
   def error!(message , char_count)
