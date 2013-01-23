@@ -61,6 +61,10 @@ def test_code
 end
 
 def simple_code
+  %Q{1 + 2 + 3 * 4 - 5}
+end
+
+def person_clone
   %Q{Person := Object clone}
 end
 

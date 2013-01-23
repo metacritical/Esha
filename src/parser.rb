@@ -40,7 +40,7 @@ class Parser
       when :SETSLOT    then setslot
       when :IDENTIFIER then identifier
       else
-        if RESERVED_WORDS.include? @read_token.value or TOKENS.include? @read_token.type
+        if !RESERVED_WORDS.include? @read_token.value or !TOKENS.include? @read_token.type
           expression
         end
       end
@@ -53,7 +53,6 @@ class Parser
 
   def setslot
     check_type(token)
-    read_token
     AST::Setslot.new({ :left => look_behind, :right => look_ahead })
   end
 
