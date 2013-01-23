@@ -25,4 +25,8 @@ module ColorPrinter
   def paint( input, color )
     puts "#{ANSI_ESC}#{RENDITION_EFFECTS[:bright]}#{ANSI_FOREGRND}#{ANSI_COLOR_CODES[color]}m#{input}#{ANSI_RESET}"
   end	
+  
+  def code_print(message, lang)
+    print CodeRay.scan(message, lang).encode(:terminal)
+  end
 end
