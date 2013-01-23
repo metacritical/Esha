@@ -53,13 +53,14 @@ class Parser
 
   def setslot
     check_type(token)
+    read_token
     AST::Setslot.new({ :left => look_behind, :right => look_ahead })
   end
 
   def expression
     check_type(token)
     puts "hi reached Here :: #{@token.type}"
-    AST::Expression.new({ :expression => look_ahead })
+    AST::Expression.new({ :expression => setslot })
   end
 
   def look_ahead
