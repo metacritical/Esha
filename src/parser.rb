@@ -1,18 +1,22 @@
 class Parser
-  attr_accessor :lexer , :token , :read_token , :look_ahead , :expressions #Expression stack
+  attr_accessor :lexer , :token , :read_token , :look_ahead , :look_behind, :expressions #Expression stack
 
   def initialize(lexer)
     self.lexer = lexer
     self.expressions = []
-    self.read_token = read_token
   end
 
   def parse
-    while @read_token
-      expressions << statement if statement
-      read_token
-    end rescue nil
-    puts expressions.pretty_inspect
+    begin
+      while read_token
+        raise ParseError, "Parse Finished" if @read_token.value == false
+        puts "Current read Token : #{@read_token.type} :: #{@read_token.value}"
+        expressions << statement if statement
+      end
+    rescue => e
+      code_print(expressions.pretty_inspect , :java)
+      code_print(e.message , :java)
+    end
   end
 
   private
@@ -21,36 +25,58 @@ class Parser
   end
   
   def check_type(tok_object)
-    error! "Found #{tok_object.type} #{tok_object.value}, unexpected type error", tok_obj unless TOKENS.include? tok_object.type
+    unless TOKENS.include? tok_object.type or RESERVED_WORDS.include? tok_object.value
+      error! "Found #{tok_object.type} #{tok_object.value}, unexpected type error", tok_object
+    end
   end
 
   def read_token
     self.token = self.read_token = lexer.read_token
   end
-
+  
   def statement
     return stmt = 
-      case @read_token.type 
-      when :IDENTIFIER then return identifier
-      when :SETSLOT    then return setslot
+      case look_ahead.type 
+      when :SETSLOT    then setslot
+      when :IDENTIFIER then identifier
+      else
+        if RESERVED_WORDS.include? @read_token.value or TOKENS.include? @read_token.type
+          expression
+        end
       end
+  end
+  
+  def identifier
+    check_type(token)
+    AST::Identifier.new({ :left => look_behind, :right => look_ahead })
   end
 
   def setslot
     check_type(token)
-    AST::Setslot.new({ :left => @token  , :right => look_ahead })
+    AST::Setslot.new({ :left => look_behind, :right => look_ahead })
   end
 
-  def identifier
+  def expression
     check_type(token)
-    if look_ahead.type == :SETSLOT
-      setslot
-    else
-      AST::Identifier.new({:left => @token  , :right => look_ahead})
-    end
+    puts "hi reached Here :: #{@token.type}"
+    AST::Expression.new({ :expression => look_ahead })
   end
 
   def look_ahead
     lexer.look_ahead
   end
+  
+  def look_behind
+    lexer.look_behind
+  end
 end
+
+
+#Person := Object clone
+=begin
+AST::Setslot= 
+  left= Person
+  right= AST::identifier
+         left= Object
+         right= clone
+=end
