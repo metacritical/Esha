@@ -6,7 +6,7 @@ module Io
       end
     end
 
-    Dir.glob File.expand_path("../ast/*", __FILE__) do |file|
+    Dir.glob File.expand_path("../ast/*.rb", __FILE__) do |file|
       require file
     end
   end
