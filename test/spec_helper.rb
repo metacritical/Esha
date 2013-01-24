@@ -60,15 +60,13 @@ def test_code
   }
 end
 
-def simple_code
+def person_clone
   %Q{1 + 2 + 3 * 4 - 5}
 end
 
-def person_clone
+def simple_code
   %Q{Person := Object clone}
 end
-
-
 
 =begin
 #A thought on how to design the objects in the tree

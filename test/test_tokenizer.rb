@@ -40,7 +40,6 @@ describe Lexer do
       print "#{ paint("Count :#{count}", :red)}
       Current Token : #{ code_print(lexer_instance.read_token.pretty_inspect, :java) }
       Lookbehind Token  : #{ code_print(lexer_instance.look_ahead.pretty_inspect, :java) }" 
-      
     end
   end
 end
