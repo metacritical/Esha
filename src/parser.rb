@@ -14,7 +14,7 @@ class Parser
         expressions << statement if statement
       end
     rescue => e
-      code_print(expressions.pretty_inspect , :java)
+      code_inspect(expressions)
       code_print(e.message , :java)
     end
   end
