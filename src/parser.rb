@@ -1,5 +1,5 @@
 class Parser
-  attr_accessor :lexer , :token , :read_token , :look_ahead , :look_behind, :expressions #Expression stack
+  attr_accessor :lexer , :current_token , :read_token , :look_ahead , :look_behind, :expressions #Expression stack
 
   def initialize(lexer)
     self.lexer = lexer
@@ -9,8 +9,7 @@ class Parser
   def parse
     begin
       while read_token
-        raise ParseError, "Parse Finished" if @read_token.value == false
-        puts "Current read Token : #{@read_token.type} :: #{@read_token.value}"
+        raise ParseError, "Parse Finished" if @read_token.type == false
         expressions << statement if statement
       end
     rescue => e
@@ -31,7 +30,7 @@ class Parser
   end
 
   def read_token
-    self.token = self.read_token = lexer.read_token
+    self.current_token = self.read_token = lexer.read_token
   end
   
   def statement
@@ -47,18 +46,23 @@ class Parser
   end
   
   def identifier
-    check_type(token)
+    check_type(current_token)
+    unless current_token.eql?(:IDENTIFIER)
+      read_token
+    end
     AST::Identifier.new({ :left => look_behind, :right => look_ahead })
   end
-
+  
   def setslot
-    check_type(token)
+    check_type(current_token)
+    unless current_token.eql?(:SETSLOT)
+      read_token
+    end
     AST::Setslot.new({ :left => look_behind, :right => look_ahead })
   end
-
+  
   def expression
-    check_type(token)
-    puts "hi reached Here :: #{@token.type}"
+    check_type(current_token)
     AST::Expression.new({ :expression => setslot })
   end
 
