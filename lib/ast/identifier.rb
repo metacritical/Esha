@@ -7,7 +7,7 @@ module Io::AST
         send "#{key}=",value
       end
     end
-
+    
     def traverse
     end
   end
