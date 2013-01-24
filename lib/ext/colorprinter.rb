@@ -16,21 +16,21 @@ module ColorPrinter
     :underline => 4,
     :color256  => 38, #Next arguments are ;5;x where x is color index (0..255) {For rgb, 256 term colors}
   }
-
+  
   ANSI_ESC        = "\e["
   ANSI_FOREGRND   = ";3"
   ANSI_BACKGRND   = ";4" #Not Used Now May Be will Extend in future if required.
   ANSI_RESET      = "\e[0m"
 
-  def paint( input, color )
-   print color_string(input, :red)
+  def paint(input, color)
+    print color_string(input, :red)
   end	
   
   def code_print(message, lang)
     print CodeRay.scan(message, lang).encode(:terminal)
   end
 
-  def color_string(string ,color)
+  def color_string(string, color)
     "#{ANSI_ESC}#{RENDITION_EFFECTS[:bright]}#{ANSI_FOREGRND}#{ANSI_COLOR_CODES[color]}m#{string}#{ANSI_RESET}"
   end
 
