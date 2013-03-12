@@ -1,6 +1,7 @@
 require_relative '../setup'
 require 'minitest/autorun'
 require 'minitest/spec'
+require 'minitest/pride'
 require_relative 'spec_helper'
 
 describe Parser do
