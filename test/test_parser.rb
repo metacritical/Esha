@@ -5,6 +5,7 @@ Bundler.setup(:development)
 require 'cucumber'
 require 'minitest/autorun'
 require 'minitest/spec'
+require 'minitest/pride'
 require 'lexer'
 require 'parser'
 
