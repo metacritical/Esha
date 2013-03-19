@@ -3,24 +3,23 @@ class Parser
 
   def initialize(lexer)
     self.lexer = lexer
-    self.expressions = []
+    self.expressions = Array.new
   end
 
   def parse
-    begin
-      while read_token
-        raise ParseError, "Parse Finished" if @read_token.type == false
-        expressions << statement if statement
-      end
-    rescue => e
-      code_inspect(expressions)
-      code_print(e.message , :java)
+    #code_inspect(lexer.read_token)
+    while read_token
+      break if current_token.type == false
+      self.expressions << statement
+      #code_inspect(self.expressions)
+      #code_print(e.message , :java)
     end
+    code_inspect(self.expressions)
   end
 
   private
-  def error!(message , tok_obj)
-    raise ParseError, message rescue paint("#{message} :: #{tok_obj.line}", :red);exit
+  def read_token
+    self.current_token = self.read_token = lexer.read_token
   end
   
   def check_type(tok_object)
@@ -29,8 +28,8 @@ class Parser
     end
   end
 
-  def read_token
-    self.current_token = self.read_token = lexer.read_token
+  def error!(message , tok_obj)
+    raise ParseError, message rescue paint("#{message} :: #{tok_obj.line}", :red);exit
   end
   
   def statement
@@ -45,20 +44,20 @@ class Parser
       end
   end
   
-  def identifier
-    check_type(current_token)
-    unless current_token.eql?(:IDENTIFIER)
-      read_token
-    end
-    AST::Identifier.new({ :left => look_behind, :right => look_ahead })
-  end
-  
   def setslot
     check_type(current_token)
     unless current_token.eql?(:SETSLOT)
       read_token
     end
     AST::Setslot.new({ :left => look_behind, :right => look_ahead })
+  end
+  
+  def identifier
+    check_type(current_token)
+    unless current_token.eql?(:IDENTIFIER)
+      read_token
+    end
+    AST::Identifier.new({ :left => look_behind, :right => look_ahead })
   end
   
   def expression
