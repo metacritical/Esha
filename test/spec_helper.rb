@@ -61,11 +61,15 @@ def test_code
 end
 
 def person_clone
-  %Q{1 + 2 + 3 * 4 - 5}
+  %Q{Person := Object clone}
 end
 
 def simple_code
-  %Q{Person := Object clone}
+  %Q{1 + 2 + 3 * 4 - 5}
+end
+
+def simple_addition
+  %Q{1 + 2 + 3 + 4}
 end
 
 =begin

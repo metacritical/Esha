@@ -34,13 +34,19 @@ class Parser
   
   def statement
     return stmt = 
-      case look_ahead.type 
-      when :SETSLOT    then setslot
-      when :IDENTIFIER then identifier
-      else
-        if !RESERVED_WORDS.include? @read_token.value or !TOKENS.include? @read_token.type
-          expression
+      unless look_ahead.type.eql?(false)
+        case look_ahead.type
+        when :SETSLOT    then setslot
+        when :IDENTIFIER then identifier
+        when :PLUS       then addition
+        when :NUMBER     then binary_operation
+        else
+          if !RESERVED_WORDS.include? @read_token.value or !TOKENS.include? @read_token.type
+            expression
+          end
         end
+      else
+        current_token
       end
   end
   
@@ -60,9 +66,19 @@ class Parser
     AST::Identifier.new({ :left => look_behind, :right => look_ahead })
   end
   
-  def expression
+  def expression(type=nil)
     check_type(current_token)
     AST::Expression.new({ :expression => setslot })
+  end
+
+  def addition
+    check_type(current_token)
+    if current_token.type == :PLUS
+      AST::Addition.new({:left => expressions.last , :right => read_token})
+    else
+      read_token
+      AST::Addition.new({:left => look_behind , :right => read_token})
+    end
   end
 
   def look_ahead
@@ -71,6 +87,12 @@ class Parser
   
   def look_behind
     lexer.look_behind
+  end
+  
+  def binary_operation
+    case current_token.type
+    when :PLUS then addition
+    end
   end
 end
 
@@ -82,4 +104,13 @@ AST::Setslot=
   right= AST::identifier
          left= Object
          right= clone
+
+
+1 + 2 + 3
+
+AST::BinaryExpression=
+  
+
+
+
 =end

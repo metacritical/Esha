@@ -137,7 +137,7 @@ class Lexer
   end
   
   def look_behind
-    prev_tok = parsed_tokens[offset - 1]
+    prev_tok = parsed_tokens[offset - 2]
     Token.new(prev_tok) unless prev_tok.nil?
   end
   

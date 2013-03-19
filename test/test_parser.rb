@@ -12,7 +12,7 @@ require 'parser'
 describe Parser do
   before do
     def lexer
-      @lexer = Lexer.new(simple_code)
+      @lexer = Lexer.new(simple_addition)
     end
 
     def parser
