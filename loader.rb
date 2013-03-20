@@ -21,6 +21,3 @@ end
 class Parser
   include Io
 end
-
-
-

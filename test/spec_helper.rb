@@ -65,11 +65,14 @@ def person_clone
 end
 
 def simple_code
-  %Q{1 + 2 + 3 * 4 - 5}
+  %Q{
+     1 + 2 + 3 * 4 - 5
+     1 + 2 + 3 + 4
+    }
 end
 
 def simple_addition
-  %Q{1 + 2 + 3 + 4}
+  %Q{1 + 2 * 3 - 5} #- 4 + 5 + 6 - 7}
 end
 
 =begin

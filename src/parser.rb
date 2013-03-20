@@ -1,19 +1,19 @@
 class Parser
-  attr_accessor :lexer , :current_token , :read_token , :look_ahead , :look_behind, :expressions #Expression stack
+  attr_accessor :lexer , :current_token , :read_token , :look_ahead , :look_behind, :expressions , :tree_stack #Expression stack
 
   def initialize(lexer)
     self.lexer = lexer
     self.expressions = Array.new
+    self.tree_stack = Array.new
   end
 
   def parse
     #code_inspect(lexer.read_token)
-    while read_token
-      break if current_token.type == false
-      self.expressions << statement
-      #code_inspect(self.expressions)
-      #code_print(e.message , :java)
+    while !look_ahead.type.eql?(false)
+      read_token
+      self.tree_stack << statement
     end
+    self.expressions << self.tree_stack.pop
     code_inspect(self.expressions)
   end
 
@@ -33,23 +33,21 @@ class Parser
   end
   
   def statement
-    return stmt = 
-      unless look_ahead.type.eql?(false)
-        case look_ahead.type
-        when :SETSLOT    then setslot
-        when :IDENTIFIER then identifier
-        when :PLUS       then addition
-        when :NUMBER     then binary_operation
-        else
-          if !RESERVED_WORDS.include? @read_token.value or !TOKENS.include? @read_token.type
-            expression
-          end
-        end
+    stmt = 
+      case look_ahead.type
+      when :SETSLOT    then setslot
+      when :IDENTIFIER then identifier
+      when :PLUS       then addition
+      when :MINUS      then subtraction
+      when :NUMBER     then binary_operation
+      when :ASTERISK   then multiplication
       else
-        current_token
+        if !RESERVED_WORDS.include? @read_token.value or !TOKENS.include? @read_token.type
+          expression
+        end
       end
   end
-  
+
   def setslot
     check_type(current_token)
     unless current_token.eql?(:SETSLOT)
@@ -74,10 +72,30 @@ class Parser
   def addition
     check_type(current_token)
     if current_token.type == :PLUS
-      AST::Addition.new({:left => expressions.last , :right => read_token})
+      AST::Addition.new({:left => tree_stack.pop, :right => read_token})
     else
       read_token
-      AST::Addition.new({:left => look_behind , :right => read_token})
+      AST::Addition.new({:left => look_behind, :right => read_token})
+    end
+  end
+
+  def subtraction
+    check_type(current_token)
+    if current_token.type == :MINUS
+      AST::Subtraction.new({:left => tree_stack.pop, :right => read_token})
+    else
+      read_token
+      AST::Subtraction.new({:left => look_behind, :right => read_token})
+    end
+  end
+
+  def multiplication
+    check_type(current_token)
+    if current_token.type == :ASTERISK
+      AST::Multiplication.new({:left => tree_stack.pop, :right => read_token})
+    else
+      read_token
+      AST::Multiplication.new({:left => look_behind, :right => read_token})
     end
   end
 
@@ -92,6 +110,8 @@ class Parser
   def binary_operation
     case current_token.type
     when :PLUS then addition
+    when :MINUS then subtraction
+    when :ASTERISK then multiplication
     end
   end
 end
@@ -109,8 +129,4 @@ AST::Setslot=
 1 + 2 + 3
 
 AST::BinaryExpression=
-  
-
-
-
 =end
