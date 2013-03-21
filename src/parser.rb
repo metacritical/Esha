@@ -71,6 +71,7 @@ class Parser
 
   def addition
     check_type(current_token)
+    node = { :PLUS => AST::Addition }
     if current_token.type == :PLUS
       AST::Addition.new({:left => tree_stack.pop, :right => read_token})
     else
@@ -81,6 +82,7 @@ class Parser
 
   def subtraction
     check_type(current_token)
+    node = { :MINUS => AST::Subtraction }
     if current_token.type == :MINUS
       AST::Subtraction.new({:left => tree_stack.pop, :right => read_token})
     else
@@ -91,11 +93,9 @@ class Parser
 
   def multiplication
     check_type(current_token)
+    node = { :ASTERISK => AST::Multiplication }
     if current_token.type == :ASTERISK
       AST::Multiplication.new({:left => tree_stack.pop, :right => read_token})
-    else
-      read_token
-      AST::Multiplication.new({:left => look_behind, :right => read_token})
     end
   end
 

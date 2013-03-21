@@ -13,7 +13,7 @@ module Io
      :MINUS, :ASTERISK, :MODULUS, :SLASH, :AND, :OR, :COMPARISON, :NOT_EQUALS, :NOT, :LESSTHAN_EQUALS, :GREATERTHAN_EQUALS,
      :LESSTHAN, :GREATERTHAN, :SEMICOLON, :COMMA, :GETTER_SETTER, :SETSLOT, :UPDATESLOT, :EXPONENT
     ]
-  
+
   class Token
     attr_accessor :type , :value , :line , :column
     def initialize(token)
