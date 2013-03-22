@@ -17,14 +17,12 @@ describe Lexer do
   end
   
   it "should check if the given code is an instance of string" do
-    skip
     self.lexer.code.must_be_instance_of String
   end
   
   it "should tokenize and output the given code" do
-    #puts "Input code : #{ code_print(test_code, :ruby) }"
     tokens = lexer.tokenize
-    puts "Parsed Tokens :\n #{ code_print(tokens.pretty_inspect, :ruby) }"
+    puts "Parsed Tokens :\n #{code_print(tokens.pretty_inspect, :ruby)}"
     puts "Number of Tokens  #{tokens.length}"
   end
 
