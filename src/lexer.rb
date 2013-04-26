@@ -94,7 +94,7 @@ class Lexer
 
       when /\A(\,)/                       then parsed_tokens << [:COMMA,              $&, i, getline(i)]
 
-      when /\A(\::=)/                     then parsed_tokens << [:NEWSLOT,      $&, i, getline(i)]
+      when /\A(\::=)/                     then parsed_tokens << [:NEWSLOT,            $&, i, getline(i)]
         
       when /\A(\:=)/                      then parsed_tokens << [:SETSLOT,            $&, i, getline(i)]
 
