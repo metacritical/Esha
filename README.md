@@ -3,6 +3,8 @@ Esha
 
 An 'Io' language implementation in ruby , build on ruby. (Work in Progress)
 
+
+![ESHA_LOGO](esha_logo.png)
 Roadmap : 
 
 #####1) Make enough language that it starts working on ruby,
