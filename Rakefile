@@ -10,7 +10,9 @@ namespace :io do
       system "ruby test/test_parser.rb"
     end
     
-    task :all => ['io:test:lexer', 'io:test:parser']
+    task :all => ['io:test:lexer', 'io:test:parser'] do
+      ENV["COVERAGE"] = 'true'
+    end
   end
 end
 

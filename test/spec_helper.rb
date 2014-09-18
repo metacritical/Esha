@@ -6,6 +6,17 @@ require 'minitest/spec'
 require 'minitest/pride'
 require_relative '../loader'
 
+if ENV["COVERAGE"]
+  require 'simplecov'
+  require 'coveralls'
+
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
+  SimpleCov.start
+end
+
 def test_code
   %Q{
   3 == 2
