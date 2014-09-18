@@ -1,13 +1,4 @@
-require_relative '../loader'
 require_relative 'spec_helper'
-require 'bundler'
-Bundler.setup(:development)
-require 'cucumber'
-require 'minitest/autorun'
-require 'minitest/spec'
-require 'minitest/pride'
-require 'lexer'
-require 'parser'
 
 describe Parser do
   before do

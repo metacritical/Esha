@@ -1,3 +1,11 @@
+require 'bundler'
+Bundler.setup(:development)
+require 'cucumber'
+require 'minitest/autorun'
+require 'minitest/spec'
+require 'minitest/pride'
+require_relative '../loader'
+
 def test_code
   %Q{
   3 == 2
